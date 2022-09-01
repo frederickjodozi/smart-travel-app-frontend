@@ -6,10 +6,10 @@ import logo from '../../images/logo.svg';
 
 function Header() {
   return (
-    <div className="header wrapper_type_small">
+    <header className="header wrapper_type_small">
       <img className="header__logo" src={logo} alt="logo" />
       <Navigation />
-    </div>
+    </header>
   );
 }
 
