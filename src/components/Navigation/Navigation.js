@@ -1,22 +1,34 @@
 import { React } from 'react';
 import './Navigation.css';
 
-function Navigation({isLoggedIn, onLogout, onSignUpClick, onLoginClick}) {
+function Navigation({
+  isLoggedIn, onLogout, onSignUpClick, onLoginClick
+}) {
   return (
-    <div className="navigation">
+    <nav className="navigation">
       {isLoggedIn ? (
-        <>
-          <a className="navigation__link" href="#home">Home</a>
-          <a className="navigation__link" href="#savedarticles">Saved Articles</a>
-          <button className="navigation__button" type="button" onClick="onLogout">Log Out</button>
-        </>
+        <ul className="navigation__list">
+          <li>
+            <a className="navigation__link" href="#home">Home</a>
+          </li>
+          <li>
+            <a className="navigation__link" href="#savedarticles">Saved Articles</a>
+          </li>
+          <li>
+            <button className="navigation__button" type="button" onClick="onLogout">Log Out</button>
+          </li>
+        </ul>
       ) : (
-        <>
-          <button className="navigation__button" type="button" onClick="onLoginClick">Log In</button>
-          <button className="navigation__button" type="button" onClick="onSignUpClick">Sign Up</button>
-        </>
+        <ul className="navigation__list">
+          <li>
+            <button className="navigation__button" type="button" onClick="onLoginClick">Log In</button>
+          </li>
+          <li>
+            <button className="navigation__button" type="button" onClick="onSignUpClick">Sign Up</button>
+          </li>
+        </ul>
       )}
-    </div>
+    </nav>
   );
 }
 

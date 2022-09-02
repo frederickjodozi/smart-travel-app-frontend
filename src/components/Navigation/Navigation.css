@@ -1,6 +1,7 @@
-.navigation {
+.navigation__list {
   display: flex;
   align-items: center;
+  list-style: none;
 }
 
 .navigation__button {
