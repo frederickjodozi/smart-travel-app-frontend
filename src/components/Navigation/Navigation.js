@@ -19,16 +19,16 @@ function Navigation({
             <a className="navigation__link" href="#savedarticles">Saved Articles</a>
           </li>
           <li className="navigation__item">
-            <button className="navigation__button" type="button" onClick="onLogout">Log Out</button>
+            <button className="navigation__button" type="button" onClick={onLogout}>Log Out</button>
           </li>
         </ul>
       ) : (
         <ul className="navigation__list">
           <li className="navigation__item">
-            <button className="navigation__button" type="button" onClick="onLoginClick">Log In</button>
+            <button className="navigation__button" type="button" onClick={onLoginClick}>Log In</button>
           </li>
           <li className="navigation__item">
-            <button className="navigation__button" type="button" onClick="onSignUpClick">Sign Up</button>
+            <button className="navigation__button" type="button" onClick={onSignUpClick}>Sign Up</button>
           </li>
         </ul>
       )}
