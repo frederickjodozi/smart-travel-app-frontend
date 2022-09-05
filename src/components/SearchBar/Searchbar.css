@@ -44,5 +44,6 @@
 }
 
 .searchbar__button:hover {
+  cursor: pointer;
   background-color: #0255E5;
 }
