@@ -1,7 +1,7 @@
 import { React, useState } from 'react';
 import './SearchBar.css';
 
-function SearchBar({ onSearch }) {
+function SearchBar({ onQuery }) {
   const [query, setQuery] = useState('');
 
   const handleQueryChange = (e) => {
@@ -11,7 +11,7 @@ function SearchBar({ onSearch }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSearch();
+    onQuery();
   };
 
   return (

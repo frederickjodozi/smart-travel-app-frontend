@@ -46,7 +46,7 @@ function App() {
         onSignUpClick={handleSignUpClick}
         onLoginClick={handleLoginClick}
       />
-      <Main onSearch={handleQuery} />
+      <Main onQuery={handleQuery} />
       <SignUpFormPopup
         isOpen={isSignUpFormOpen}
         onClose={handleClosePopups}
