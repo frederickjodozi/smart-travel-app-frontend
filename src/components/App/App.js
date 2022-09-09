@@ -3,6 +3,7 @@ import Header from '../Header/Header';
 import Main from '../Main/Main';
 import SignUpFormPopup from '../SignUpFormPopup/SignUpFormPopup';
 import LoginFormPopup from '../LoginFormPopup/LoginFormPopup';
+import Footer from '../Footer/Footer';
 import './App.css';
 
 function App() {
@@ -47,6 +48,7 @@ function App() {
         onLoginClick={handleLoginClick}
       />
       <Main onQuery={handleQuery} />
+      <Footer />
       <SignUpFormPopup
         isOpen={isSignUpFormOpen}
         onClose={handleClosePopups}
