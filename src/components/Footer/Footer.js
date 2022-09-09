@@ -34,7 +34,7 @@ function Footer() {
           </a>
         </li>
         <li className="footer__list-item">
-          <img src={practicumIcon} className="footer__link-icon" aria-label="LinkedIn" />
+          <img src={practicumIcon} className="footer__link-icon" aria-label="Practicum" />
           <a
             href="https://practicum.com/"
             className="footer__link"
@@ -42,6 +42,17 @@ function Footer() {
             rel="noopener noreferrer"
           >
             Practicum
+          </a>
+        </li>
+        <li className="footer__list-item">
+          <img src="https://opentripmap.io/img/small_logo.svg" className="footer__link-icon" aria-label="Open Trip Map Api" />
+          <a
+            href="https://opentripmap.io/product"
+            className="footer__link"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            OpenTripMap API
           </a>
         </li>
       </ul>
