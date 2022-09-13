@@ -5,6 +5,7 @@ import SignUpFormPopup from '../SignUpFormPopup/SignUpFormPopup';
 import LoginFormPopup from '../LoginFormPopup/LoginFormPopup';
 import Footer from '../Footer/Footer';
 import './App.css';
+import '../../blocks/background/background.css';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -41,13 +42,15 @@ function App() {
 
   return (
     <div className="app">
-      <Header
-        isLoggedIn={isLoggedIn}
-        onLogout={handleLogout}
-        onSignUpClick={handleSignUpClick}
-        onLoginClick={handleLoginClick}
-      />
-      <Main onQuery={handleQuery} />
+      <div className="background">
+        <Header
+          isLoggedIn={isLoggedIn}
+          onLogout={handleLogout}
+          onSignUpClick={handleSignUpClick}
+          onLoginClick={handleLoginClick}
+        />
+        <Main onQuery={handleQuery} />
+      </div>
       <Footer />
       <SignUpFormPopup
         isOpen={isSignUpFormOpen}
