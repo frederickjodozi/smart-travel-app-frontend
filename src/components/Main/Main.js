@@ -5,7 +5,7 @@ import About from '../About/About';
 import Locations from '../Locations/Locations';
 import './Main.css';
 
-function Main({ onQuery }) {
+function Main({ onQuery, locations }) {
   return (
     <main className="main">
       <Routes>
@@ -29,7 +29,7 @@ function Main({ onQuery }) {
               <h2 className="main__subtitle">
                 Location results for your search:
               </h2>
-              <Locations />
+              <Locations locations={locations} />
             </>
           )}
         />
