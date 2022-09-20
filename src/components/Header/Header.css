@@ -14,17 +14,13 @@
 @media (max-width: 768px) {
   .header__logo {
     width: 45px;
+    height: 45px;
   }
 }
 
 @media (max-width: 480px) {
   .header__logo {
     width: 40px;
-  }
-}
-
-@media (max-width: 320px) {
-  .header__logo {
-    width: 30px;
+    height: 40px;
   }
 }

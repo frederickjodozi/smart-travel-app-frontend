@@ -11,7 +11,7 @@
 
 .navigation__link {
   margin: 0 16px 0 0;
-  color: #FFFFFF;
+  color: #ffffff;
   font-family: 'Inter';
   font-style: normal;
   font-weight: 500;
@@ -31,11 +31,11 @@
   height: 60px;
   margin: 0 20px 0 0;
   padding: 0;
-  border: 2px solid #2F71E5;
+  border: 2px solid #2f71e5;
   border-radius: 100px;
   box-sizing: border-box;
-  background-color: #FFFFFF;
-  color: #2F71E5;
+  background-color: #ffffff;
+  color: #2f71e5;
   font-size: 18px;
   line-height: 24px;
   font-family: 'Inter', sans-serif;
@@ -46,35 +46,44 @@
   cursor: pointer;
   opacity: 60%;
   padding-bottom: 28px;
-  border-bottom: 2px solid #FFFFFF;
+  border-bottom: 2px solid #ffffff;
 }
 
 .navigation__button:hover {
   cursor: pointer;
-  background-color: #2F71E5;
-  color: #FFFFFF;
+  background-color: #2f71e5;
+  color: #ffffff;
 }
 
 @media (max-width: 768px) {
   .navigation__link {
-    margin: 0 16px;
-    font-size: 16px;
+    margin: 0 12px;
   }
 
   .navigation__button {
+    width: 85px;
+    height: 55px;
     margin: 0 16px;
     font-size: 16px;
   }
 }
 
 @media (max-width: 480px) {
+  .navigation__icon {
+    width: 12px;
+    height: 12px;
+    margin: 0 2px 0 0;
+  }
+
   .navigation__link {
-    margin: 0 8px;
+    margin: 0 6px;
     font-size: 13px;
   }
 
   .navigation__button {
-    margin: 0 8px;
+    width: 75px;
+    height: 50px;
+    margin: 0 6px;
     padding: 8px;
     font-size: 13px;
   }
@@ -87,6 +96,8 @@
   }
 
   .navigation__button {
+    width: 70px;
+    height: 45px;
     margin: 0 4px;
     font-size: 11px;
   }
