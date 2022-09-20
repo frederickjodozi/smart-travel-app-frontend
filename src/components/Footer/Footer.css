@@ -53,3 +53,51 @@
   padding-bottom: 4px;
   border-bottom: 2px solid #FFFFFF;
 }
+
+@media (max-width:768px) {
+  .footer {
+    padding: 32px 0 25px 0;
+  }
+
+  .footer__link {
+    font-size: 14px;
+    line-height: 18px;
+  }
+
+  .footer__copywrite {
+    font-size: 14px;
+    line-height: 18px;
+  }
+
+  @media (max-width: 480px) {
+    .footer {
+      padding: 28px 0 22px 0;
+    }
+
+    .footer__link-icon {
+      width: 12px;
+      height: 12px;
+      margin: 0 2px 0 0;
+    }
+
+    .footer__link {
+      margin: 0 6px;
+      font-size: 13px;
+    }
+
+    .footer__copywrite {
+      font-size: 13px;
+    }
+  }
+
+  @media (max-width: 320px) {
+    .footer__link {
+      margin: 0 4px;
+      font-size: 11px;
+    }
+
+    .footer__copywrite {
+      font-size: 11px;
+    }
+  }
+}
