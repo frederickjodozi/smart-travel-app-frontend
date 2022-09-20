@@ -18,7 +18,7 @@ function Main({ onQuery, locations }) {
                 Find amazing sightseeing locations from all over the world!
               </h2>
               <SearchBar onQuery={onQuery} />
-              <About />
+              {/* <About /> */}
             </>
         )}
         />
