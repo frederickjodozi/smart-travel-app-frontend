@@ -24,7 +24,7 @@ function SearchBar({ onQuery }) {
           aria-label="query"
           value={query}
           onChange={handleQueryChange}
-          placeholder="Your Search to anywhere and everywhere..."
+          placeholder="Your Search to anywhere..."
           minLength="2"
           maxLength="30"
           required
