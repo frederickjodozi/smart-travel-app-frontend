@@ -1,5 +1,5 @@
 .signupform__input {
-  width: 400px;
+  width: 100%;
   height: 60px;
   margin: 20px 0 0 0;
   padding: 0 24px;
@@ -14,6 +14,35 @@
   margin: 0;
 }
 
+.signupform__input:focus {
+  border-color:  #2F71E5;
+}
+
 .signupform__input::placeholder {
   color: rgba(0,0,0,0.7);
+}
+
+@media (max-width: 768px) {
+  .signupform__input {
+    height: 55px;
+    padding: 0 20px;
+    font-size: 14px;
+    line-height: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .signupform__input {
+    height: 50px;
+    margin: 16px 0 0 0;
+    padding: 0 16px;
+  }
+}
+
+@media (max-width: 320px) {
+  .signupform__input {
+    height: 45px;
+    margin: 12px 0 0 0;
+    font-size: 11px;
+  }
 }
