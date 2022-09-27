@@ -93,11 +93,11 @@
   @media (max-width: 320px) {
     .footer__link {
       margin: 0 4px;
-      font-size: 11px;
+      font-size: 12px;
     }
 
     .footer__copywrite {
-      font-size: 11px;
+      font-size: 12px;
     }
   }
 }
