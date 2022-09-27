@@ -65,6 +65,7 @@
     height: 55px;
     margin: 0 16px;
     font-size: 16px;
+    line-height: 20px;
   }
 }
 
@@ -94,13 +95,13 @@
 @media (max-width: 320px) {
   .navigation__link {
     margin: 0 4px;
-    font-size: 11px;
+    font-size: 12px;
   }
 
   .navigation__button {
     width: 70px;
     height: 45px;
     margin: 0 4px;
-    font-size: 11px;
+    font-size: 12px;
   }
 }
