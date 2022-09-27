@@ -29,7 +29,7 @@ function SearchBar({ onQuery }) {
           maxLength="30"
           required
         />
-        <button type="submit" className="searchbar__button">Go!</button>
+        <button type="submit" className="searchbar__button" aria-label="submit">Go!</button>
       </form>
     </section>
   );
