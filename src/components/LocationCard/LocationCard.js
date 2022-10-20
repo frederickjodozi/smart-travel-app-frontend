@@ -4,7 +4,7 @@ import { React } from 'react';
 import './LocationCard.css';
 
 function LocationCard({
-  location, onCardClick, onCardSave, onCardDelete, isLoggedIn
+  location, onCardClick, onCardSave, isLoggedIn
 }) {
   const handleCardClick = () => {
     onCardClick(location);
