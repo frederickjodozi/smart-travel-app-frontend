@@ -7,7 +7,7 @@ import Locations from '../Locations/Locations';
 import './Main.css';
 
 function Main({
-  onQuery, isLoggedIn, locations, savedLocations
+  onQuery, locations, onCardClick, onCardSave, isLoggedIn, savedLocations, onCardDelete
 }) {
   return (
     <main className="main">
@@ -23,16 +23,24 @@ function Main({
               <SearchBar onQuery={onQuery} />
               <About />
             </>
-        )}
+          )}
         />
         <Route
           path="/locations"
           element={(
             <ProtectedRoute routeAuth={locations}>
               <h2 className="main__subtitle">
-                Location results for your search:
+                Location results for your search
               </h2>
-              <Locations locations={locations} />
+              <span className="main__message">
+                Click cards for more info
+              </span>
+              <Locations
+                locations={locations}
+                onCardClick={onCardClick}
+                onCardSave={onCardSave}
+                isLoggedIn={isLoggedIn}
+              />
             </ProtectedRoute>
           )}
         />
@@ -41,9 +49,14 @@ function Main({
           element={(
             <ProtectedRoute routeAuth={isLoggedIn}>
               <h2 className="main__subtitle">
-                Your saved locations:
+                Your saved locations
               </h2>
-              <Locations locations={savedLocations} />
+              <Locations
+                locations={savedLocations}
+                onCardClick={onCardClick}
+                onCardDelete={onCardDelete}
+                isLoggedIn={isLoggedIn}
+              />
             </ProtectedRoute>
           )}
         />
