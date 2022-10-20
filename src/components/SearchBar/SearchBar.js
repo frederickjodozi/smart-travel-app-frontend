@@ -1,5 +1,6 @@
 import { React, useState } from 'react';
 import './SearchBar.css';
+import downArrow from '../../images/downArrow.png';
 
 function SearchBar({ onQuery }) {
   const [query, setQuery] = useState('');
@@ -29,8 +30,17 @@ function SearchBar({ onQuery }) {
           maxLength="30"
           required
         />
-        <button type="submit" className="searchbar__button" aria-label="submit">Go!</button>
+        <button type="submit" className="searchbar__button" aria-label="submit">
+          Go!
+        </button>
       </form>
+      <a href="./#about" className="searchbar__link">
+        <img
+          className="searchbar__arrow"
+          src={downArrow}
+          alt="down arrow link"
+        />
+      </a>
     </section>
   );
 }
