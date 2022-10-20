@@ -1,9 +1,14 @@
+/* eslint-disable consistent-return */
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 import { React, useEffect } from 'react';
 import './Popup.css';
 
-function Popup({ isOpen, onClose, children }) {
+function Popup({
+  isOpen, location, onClose, children
+}) {
   useEffect(() => {
-    if (!isOpen) return;
+    if (!isOpen && !location) return;
 
     const closeByEscape = (e) => {
       if (e.key === 'Escape') {
@@ -12,17 +17,21 @@ function Popup({ isOpen, onClose, children }) {
     };
 
     document.addEventListener('keydown', closeByEscape);
-    // eslint-disable-next-line consistent-return
+
     return () => document.removeEventListener('keydown', closeByEscape);
   }, [isOpen, onClose]);
 
-  const handleOverlay = (e) => {
+  const handleOverlayClick = (e) => {
     if (e.target === e.currentTarget) {
       onClose();
     }
   };
+
   return (
-    <div className={`popup ${isOpen ? 'popup_active' : ''}`} onClick={handleOverlay}>
+    <div
+      className={`popup ${isOpen || location ? 'popup_active' : ''}`}
+      onClick={handleOverlayClick}
+    >
       {children}
     </div>
   );
