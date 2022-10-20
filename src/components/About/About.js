@@ -5,7 +5,7 @@ import authorPicture from '../../images/authorPicture.jpg';
 
 function About() {
   return (
-    <section className="about">
+    <section className="about" id="about">
       <h2 className="about__title">About me</h2>
       <div className="about__info wrapper_type_large">
         <img src={authorPicture} className="about__image" aria-label="The author" />
