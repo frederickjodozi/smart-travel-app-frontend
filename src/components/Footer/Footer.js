@@ -4,6 +4,7 @@ import '../../blocks/wrapper/wrapper.css';
 import linkedInIcon from '../../images/linkedInIcon.svg';
 import githubIcon from '../../images/githubIcon.svg';
 import practicumIcon from '../../images/practicumIcon.ico';
+import openTripMapIcon from '../../images/openTripMapIcon.png';
 
 function Footer() {
   const date = new Date();
@@ -12,7 +13,7 @@ function Footer() {
     <footer className="footer wrapper_type_small">
       <ul className="footer__list">
         <li className="footer__list-item">
-          <img src={linkedInIcon} className="footer__link-icon" aria-label="LinkedIn" />
+          <img src={linkedInIcon} className="footer__link-icon" alt="LinkedIn" />
           <a
             href="https://www.linkedin.com/in/frederick-jodozi/"
             className="footer__link"
@@ -23,7 +24,7 @@ function Footer() {
           </a>
         </li>
         <li className="footer__list-item">
-          <img src={githubIcon} className="footer__link-icon" aria-label="Github" />
+          <img src={githubIcon} className="footer__link-icon" alt="Github" />
           <a
             href="https://github.com/frederickjodozi"
             className="footer__link"
@@ -34,7 +35,7 @@ function Footer() {
           </a>
         </li>
         <li className="footer__list-item">
-          <img src={practicumIcon} className="footer__link-icon" aria-label="Practicum" />
+          <img src={practicumIcon} className="footer__link-icon" alt="Practicum" />
           <a
             href="https://practicum.com/"
             className="footer__link"
@@ -45,7 +46,7 @@ function Footer() {
           </a>
         </li>
         <li className="footer__list-item">
-          <img src="https://opentripmap.io/img/small_logo.svg" className="footer__link-icon" aria-label="Open Trip Map Api" />
+          <img src={openTripMapIcon} className="footer__link-icon" alt="Open Trip Map Api" />
           <a
             href="https://opentripmap.io/product"
             className="footer__link"
