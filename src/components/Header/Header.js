@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import Navigation from '../Navigation/Navigation';
 import './Header.css';
 import '../../blocks/wrapper/wrapper.css';
@@ -9,7 +10,9 @@ function Header({
 }) {
   return (
     <header className="header wrapper_type_small">
-      <img className="header__logo" src={logo} alt="logo" />
+      <Link to="/">
+        <img className="header__logo" src={logo} alt="logo" />
+      </Link>
       <Navigation
         isLoggedIn={isLoggedIn}
         onLogout={onLogout}
