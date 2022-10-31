@@ -1,7 +1,6 @@
 .popup {
   visibility: hidden;
-  opacity: 0.6;
-  background-color: #000;
+  background-color: rgba(0,0,0,0.6);
   position: fixed;
   top: 0;
   left: 0;
@@ -14,8 +13,8 @@
 
 .popup_active {
   visibility: visible;
-  opacity: 0.9;
-  transition: visibility 0.5s linear 0s, opacity 0.5s linear 0s;
+  background-color: rgba(0,0,0,0.9);
+  transition: visibility 0.5s linear 0s, background-color 0.5s linear 0s;
 }
 
 @media (max-width: 480px) {
