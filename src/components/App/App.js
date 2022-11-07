@@ -6,6 +6,8 @@ import Main from '../Main/Main';
 import SignUpFormPopup from '../SignUpFormPopup/SignUpFormPopup';
 import LoginFormPopup from '../LoginFormPopup/LoginFormPopup';
 import LocationPopup from '../LocationPopup/LocationPopup';
+import LoadingPopup from '../LoadingPopup/LoadingPopup';
+import InfoToolTip from '../InfoToolTip/InfoToolTip';
 import Footer from '../Footer/Footer';
 import './App.css';
 import '../../blocks/background/background.css';
@@ -13,10 +15,11 @@ import '../../blocks/background/background.css';
 function App() {
   const navigate = useNavigate();
 
-  // LOGIN STATE //
+  // LOGIN STATES //
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
-  // LOCATIONS TO BE RENDERED IN UI STATES //
+  // UI RENDERED LOCATIONS STATES //
   const [locations, setLocations] = useState([]);
   const [savedLocations, setSavedLocations] = useState([]);
 
@@ -25,52 +28,9 @@ function App() {
   const [isLoginFormOpen, setIsLoginFormOpen] = useState(false);
   const [selectedLocation, setSelectedLocation] = useState(null);
 
-  // CLOSE POPUP HANDLER //
-  const handleClosePopups = () => {
-    setIsSignUpFormOpen(false);
-    setIsLoginFormOpen(false);
-    setSelectedLocation(null);
-  };
-
-  // USER REGISTRATION AND LOGIN HANDLERS //
-  const handleRegistration = (e) => {
-    e.preventDefault();
-    // REGISTRATION LOGIC TO BE ADDED WITH BACKEND PART OF THE PROJECT //
-    handleClosePopups();
-  };
-
-  const handleLogin = (e) => {
-    e.preventDefault();
-    // LOGIN LOGIC TO BE ADDED WITH BACKEND PART OF THE PROJECT //
-    handleClosePopups();
-  };
-
-  const handleLogout = () => {
-    setIsLoggedIn(false);
-  };
-
-  // RENDER LOCATIONS HANDLERS //
-  const handleQuery = (locationName) => {
-    openTripApi.getLocationCoordinates(locationName)
-      .then((locationCoordinates) => openTripApi.createLocationRadius(locationCoordinates))
-      .then((result) => openTripApi.getLocationsInfo(result))
-      .then((result) => {
-        setLocations(result);
-        navigate('/locations');
-      })
-      .catch((err) => console.log(err));
-  };
-
-  const handleCardSave = (location) => {
-    setSavedLocations([...savedLocations, location]);
-    navigate('/saved-locations');
-  };
-
-  const handleCardDelete = (locationXid) => {
-    setSavedLocations((savedLocationsArray) => savedLocationsArray.filter(
-      (savedLocation) => savedLocation.xid === locationXid
-    ));
-  };
+  const [isInfoTooltipOpen, setIsInfoTooltipOpen] = useState(false);
+  const [infoTooltipStatus, setInfoTooltipStatus] = useState('');
+  const [infoTooltipMessage, setInfoTooltipMessage] = useState('');
 
   // OPEN POPUP HANDLERS //
   const handleSignUpClick = () => {
@@ -83,6 +43,64 @@ function App() {
 
   const handleCardClick = (location) => {
     setSelectedLocation(location);
+  };
+
+  // CLOSE POPUP HANDLER //
+  const handleClosePopups = () => {
+    setIsSignUpFormOpen(false);
+    setIsLoginFormOpen(false);
+    setSelectedLocation(null);
+    setIsInfoTooltipOpen(false);
+  };
+
+  // USER REGISTRATION AND LOGIN HANDLERS //
+  const handleRegistration = () => {
+    // REGISTRATION LOGIC TO BE ADDED WITH BACKEND PART OF THE PROJECT //
+    handleClosePopups();
+  };
+
+  const handleLogin = () => {
+    // LOGIN LOGIC TO BE ADDED WITH BACKEND PART OF THE PROJECT //
+    handleClosePopups();
+  };
+
+  const handleLogout = () => {
+    setIsLoggedIn(false);
+  };
+
+  // TODO: CHANGE CARDS DISPLAY, CHECK FOR VALIDATION? / GIT PULL
+
+  // LOCATIONS HANDLERS //
+  const handleQuery = (locationName) => {
+    setIsLoading(true);
+    openTripApi.getLocationCoordinates(locationName)
+      .then((locationCoordinates) => openTripApi.createLocationRadius(locationCoordinates))
+      .then((locationRadius) => openTripApi.getLocationsInfo(locationRadius))
+      .then((locationsArray) => {
+        setLocations(locationsArray);
+        setIsLoading(false);
+        navigate('/locations');
+      })
+      .catch((err) => {
+        console.log(err);
+        setIsLoading(false);
+        setInfoTooltipStatus('fail');
+        setInfoTooltipMessage('No locations matching this query have been found.');
+        setIsInfoTooltipOpen(true);
+      });
+  };
+
+  const handleCardSave = (location) => {
+    // LOGIN LOGIC TO BE ADDED WITH BACKEND PART OF THE PROJECT //
+    setSavedLocations([...savedLocations, location]);
+    navigate('/saved-locations');
+  };
+
+  const handleCardDelete = (locationXid) => {
+    // LOGIN LOGIC TO BE ADDED WITH BACKEND PART OF THE PROJECT //
+    setSavedLocations((savedLocationsArray) => savedLocationsArray.filter(
+      (savedLocation) => savedLocation.xid === locationXid
+    ));
   };
 
   return (
@@ -118,6 +136,15 @@ function App() {
       <LocationPopup
         location={selectedLocation}
         onClose={handleClosePopups}
+      />
+      <LoadingPopup
+        isOpen={isLoading}
+      />
+      <InfoToolTip
+        isOpen={isInfoTooltipOpen}
+        onClose={handleClosePopups}
+        status={infoTooltipStatus}
+        message={infoTooltipMessage}
       />
     </div>
   );
