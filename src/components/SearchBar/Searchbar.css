@@ -9,8 +9,13 @@
   display: flex;
 }
 
-.searchbar__input {
+.searchbar__input-container {
+  display: flex;
+  flex-direction: column;
   width: 400px;
+}
+
+.searchbar__input {
   height: 60px;
   padding: 0 32px;
   box-sizing: border-box;
@@ -24,6 +29,16 @@
   font-weight: 400;
   font-size: 16px;
   line-height: 20px;
+}
+
+.searchbar__error {
+  color: #FF0000;
+  padding: 8px 32px;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 18px;
 }
 
 .searchbar__button {
@@ -43,7 +58,7 @@
 }
 
 .searchbar__link {
-  padding: 140px 0 0 0;
+  margin: 140px 0 0 0;
 }
 
 .searchbar__arrow {
@@ -67,7 +82,7 @@
 
 @media (max-width: 1024px) {
   .searchbar__link {
-    padding: 112px 0 0 0;
+    margin: 112px 0 0 0;
   }
 }
 
@@ -76,12 +91,20 @@
     padding: 60px 0 0 0;
   }
 
-  .searchbar__input {
+  .searchbar__input-container {
     width: 300px;
+  }
+
+  .searchbar__input {
     height: 55px;
     padding: 0 28px;
     font-size: 14px;
     line-height: 16px;
+  }
+
+  .searchbar__error {
+    font-size: 12px;
+    line-height: 14px;
   }
 
   .searchbar__button {
@@ -92,7 +115,7 @@
   }
 
   .searchbar__link {
-    padding: 188px 0 0 0;
+    margin: 188px 0 0 0;
   }
 
   .searchbar__arrow {
@@ -106,10 +129,17 @@
     padding: 40px 0 0 0;
   }
 
-  .searchbar__input {
+  .searchbar__input-container {
     width: 220px;
+  }
+
+  .searchbar__input {
     height: 50px;
     padding: 0 20px;
+  }
+
+  .searchbar__error {
+    padding: 6px 20px;
   }
 
   .searchbar__button {
@@ -120,7 +150,7 @@
   }
 
   .searchbar__link {
-    padding: 232px 0 0 0;
+    margin: 232px 0 0 0;
   }
 
   .searchbar__arrow {
@@ -134,17 +164,30 @@
     padding: 30px 0 0 0;
   }
 
-  .searchbar__input {
+  .searchbar__input-container {
     width: 200px;
+  }
+
+  .searchbar__input {
     height: 45px;
     padding: 0 16px;
     font-size: 11px;
     line-height: 16px;
   }
 
+  .searchbar__error {
+    padding: 4px 16px;
+    font-size: 12px;
+    line-height: 14px;
+  }
+
   .searchbar__button {
     width: 70px;
     height: 45px;
     font-size: 11px;
+  }
+
+  .searchbar__link {
+    margin: 300px 0 0 0;
   }
 }
