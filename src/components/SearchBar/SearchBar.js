@@ -10,31 +10,30 @@ function SearchBar({ onQuery }) {
     setQuery(e.target.value);
   };
 
-  function handleValidation() {
+  async function handleValidation() {
+    let error = '';
+
     if (!query) {
-      setErrorMessage('Please fill out the query');
-      return false;
+      error = 'Please fill out the query';
+    } else if (query.length < 3) {
+      error = 'The query must contain at least 3 characters';
+    } else if (query.length > 30) {
+      error = 'The query must contain no more than 30 characters';
     }
 
-    if (query.length < 3) {
-      setErrorMessage('The query must contain at least 3 characters');
-      return false;
-    }
-
-    if (query.length > 30) {
-      setErrorMessage('The query must contain no more than 30 characters');
-      return false;
-    }
-
-    return true;
+    return error;
   }
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (handleValidation() === true) {
-      onQuery(query);
-      setErrorMessage('');
-    }
+    handleValidation().then((error) => {
+      if (error.length === 0) {
+        onQuery(query);
+        setQuery('');
+      } else {
+        setErrorMessage(error);
+      }
+    });
   };
 
   return (
@@ -56,7 +55,7 @@ function SearchBar({ onQuery }) {
           Go!
         </button>
       </form>
-      <a href="./#about" className="searchbar__link">
+      <a href="./#about" className={`searchbar__link ${errorMessage && 'searchbar__link_type_error'}`}>
         <img
           className="searchbar__arrow"
           src={downArrow}

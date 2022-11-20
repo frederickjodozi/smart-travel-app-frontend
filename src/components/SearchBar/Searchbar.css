@@ -61,6 +61,10 @@
   margin: 140px 0 0 0;
 }
 
+.searchbar__link_type_error {
+  margin: 106px 0 0 0;
+}
+
 .searchbar__arrow {
   width: 100px;
   height: 100px;
@@ -83,6 +87,10 @@
 @media (max-width: 1024px) {
   .searchbar__link {
     margin: 112px 0 0 0;
+  }
+
+  .searchbar__link_type_error {
+    margin: 78px 0 0 0;
   }
 }
 
@@ -118,6 +126,10 @@
     margin: 188px 0 0 0;
   }
 
+  .searchbar__link_type_error {
+    margin: 158px 0 0 0;
+  }
+
   .searchbar__arrow {
     width: 80px;
     height: 80px;
@@ -151,6 +163,10 @@
 
   .searchbar__link {
     margin: 232px 0 0 0;
+  }
+
+  .searchbar__link_type_error {
+    margin: 206px 0 0 0;
   }
 
   .searchbar__arrow {
@@ -189,5 +205,9 @@
 
   .searchbar__link {
     margin: 300px 0 0 0;
+  }
+
+  .searchbar__link_type_error {
+    margin: 278px 0 0 0;
   }
 }
