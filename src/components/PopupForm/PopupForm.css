@@ -21,12 +21,14 @@
 .popup__form {
   width: 100%;
   margin: 40px 0 0 0;
+  display: flex;
+  flex-direction: column;
 }
 
 .popup__submit-button {
   width: 129px;
   height: 60px;
-  margin: 40px 0 0 0;
+  margin: 8px 0 0 0;
   background-color: #2F71E5;
   border-radius: 100px;
   border: none;
@@ -88,7 +90,6 @@
   .popup__submit-button {
     width: 124px;
     height: 55px;
-    margin: 32px 0 0 0;
     font-size: 16px;
     line-height: 20px;
   }
@@ -118,7 +119,6 @@
   .popup__submit-button {
     width: 112px;
     height: 50px;
-    margin: 28px 0 0 0;
     font-size: 13px;
     line-height: 18px;
   }
@@ -147,7 +147,6 @@
   .popup__submit-button {
     width: 108px;
     height: 45px;
-    margin: 24px 0 0 0;
     font-size: 12px;
   }
 
