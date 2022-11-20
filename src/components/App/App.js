@@ -68,24 +68,27 @@ function App() {
     setIsLoggedIn(false);
   };
 
-  // TODO: CHANGE CARDS DISPLAY, CHECK FOR VALIDATION? / GIT PULL
-
   // LOCATIONS HANDLERS //
   const handleQuery = (locationName) => {
     setIsLoading(true);
-    openTripApi.getLocationCoordinates(locationName)
-      .then((locationCoordinates) => openTripApi.createLocationRadius(locationCoordinates))
-      .then((locationRadius) => openTripApi.getLocationsInfo(locationRadius))
+    openTripApi.getLocations(locationName)
       .then((locationsArray) => {
-        setLocations(locationsArray);
-        setIsLoading(false);
-        navigate('/locations');
+        if (locationsArray.length > 0) {
+          setLocations(locationsArray);
+          setIsLoading(false);
+          navigate('/locations');
+        } else {
+          setInfoTooltipStatus('fail');
+          setInfoTooltipMessage('No location was found');
+          setIsLoading(false);
+          setIsInfoTooltipOpen(true);
+        }
       })
       .catch((err) => {
         console.log(err);
-        setIsLoading(false);
         setInfoTooltipStatus('fail');
-        setInfoTooltipMessage('No locations matching this query have been found.');
+        setInfoTooltipMessage(`${err.status === (400 || 404) ? 'No location was found' : 'A problem occurred with the server'}`);
+        setIsLoading(false);
         setIsInfoTooltipOpen(true);
       });
   };

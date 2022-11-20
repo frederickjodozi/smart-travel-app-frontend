@@ -6,7 +6,7 @@ export const RATING = '3';
 export const RESPONSE_FORMAT = 'json';
 export const RESPONSE_LIMIT = '3';
 
-export const getResponseData = (res) => {
+const getResponseData = (res) => {
   if (!res.ok) {
     return Promise.reject(res);
   }
@@ -14,7 +14,7 @@ export const getResponseData = (res) => {
 };
 
 // GET LOCATION COORDINATES FROM QUERIED NAME //
-export const getLocationCoordinates = (locationName) => fetch(`${BASE_URL}/geoname?name=${locationName}&apikey=${API_KEY}`, {
+const getLocationCoordinates = (locationName) => fetch(`${BASE_URL}/geoname?name=${locationName}&apikey=${API_KEY}`, {
   method: 'GET',
   headers: {
     Accept: 'application/json',
@@ -23,8 +23,8 @@ export const getLocationCoordinates = (locationName) => fetch(`${BASE_URL}/geona
 })
   .then((res) => getResponseData(res));
 
-// CREATE A RADIUS AROUND LOCATION COORDINATES AND RECEIVE PLACES OF INTEREST IN RESPONSE //
-export const createLocationRadius = (locationCoordinates) => fetch(`${BASE_URL}/radius?radius=${SEARCH_RADIUS}
+// CREATE A RADIUS AROUND LOCATION COORDINATES AND RECEIVE PLACES OF INTEREST IDs IN RESPONSE //
+const createLocationRadius = (locationCoordinates) => fetch(`${BASE_URL}/radius?radius=${SEARCH_RADIUS}
   &lon=${locationCoordinates.lon}&lat=${locationCoordinates.lat}
   &src_geom=${DATA_SOURCE}&src_attr=${DATA_SOURCE}&rate=${RATING}
   &format=${RESPONSE_FORMAT}&limit=${RESPONSE_LIMIT}&apikey=${API_KEY}`, {
@@ -36,20 +36,27 @@ export const createLocationRadius = (locationCoordinates) => fetch(`${BASE_URL}/
 })
   .then((res) => getResponseData(res));
 
-// GET SPECIFIC INFO ABOUT RECEIVED PLACES OF INTEREST WITH ID //
-export const getLocationsInfo = (locations) => Promise.all(locations.map((location) => fetch(`${BASE_URL}/xid/${location.xid}?apikey=${API_KEY}`, {
+// GET SPECIFIC INFO ABOUT RECEIVED PLACES OF INTEREST IDs //
+const getLocationsInfo = (locations) => Promise.all(locations.map((location) => fetch(`${BASE_URL}/xid/${location.xid}?apikey=${API_KEY}`, {
   method: 'GET',
   headers: {
     Accept: 'application/json',
     'Content-Type': 'application/json',
   }
 })))
-  .then((response) => Promise.all(response.map((res) => getResponseData(res))));
+  .then((res) => Promise.all(res.map((item) => getResponseData(item))));
 
-// FULL QUERY FUNCTION TO USE IN APP FILE //
-export const getLocations = (locationName) => {
-  getLocationCoordinates(locationName)
+// COMPLETE FUNCTION TO BE USED UPON QUERY SUBMISSION //
+export async function getLocations(locationName) {
+  let returnedLocations = [];
+
+  await getLocationCoordinates(locationName)
     .then((locationCoordinates) => createLocationRadius(locationCoordinates))
-    .then((locations) => getLocationsInfo(locations))
+    .then((locationRadius) => getLocationsInfo(locationRadius))
+    .then((locations) => {
+      returnedLocations = locations;
+    })
     .catch((err) => console.log(err));
-};
+
+  return returnedLocations;
+}
