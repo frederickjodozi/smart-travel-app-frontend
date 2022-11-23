@@ -1,4 +1,4 @@
-import { React, useState } from 'react';
+import { useState } from 'react';
 import PopupForm from '../PopupForm/PopupForm';
 import './SignUpFormPopup.css';
 
@@ -55,7 +55,13 @@ function SignUpFormPopup({ isOpen, onClose, onSubmit }) {
   };
 
   return (
-    <PopupForm isOpen={isOpen} onClose={onClose} onSubmit={handleSubmit} title="Sign Up" submitText="Create Profile">
+    <PopupForm
+      isOpen={isOpen}
+      onClose={onClose}
+      onSubmit={handleSubmit}
+      title="Sign Up"
+      submitText="Create Profile"
+    >
       <input
         type="text"
         name="email"
@@ -77,7 +83,9 @@ function SignUpFormPopup({ isOpen, onClose, onSubmit }) {
         onChange={handleInputChange}
         placeholder="Create a password"
       />
-      {errorMessages.password && <span className="signupform__error">{errorMessages.password}</span>}
+      {errorMessages.password && (
+        <span className="signupform__error">{errorMessages.password}</span>
+      )}
     </PopupForm>
   );
 }

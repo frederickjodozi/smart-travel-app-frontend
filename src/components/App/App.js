@@ -1,4 +1,4 @@
-import { React, useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import * as openTripApi from '../../utils/openTripApi';
 import Header from '../Header/Header';
@@ -12,6 +12,7 @@ import Footer from '../Footer/Footer';
 import './App.css';
 import '../../blocks/background/background.css';
 
+// TODO: COMMIT IDENT AND IMPORT CHANGES, FIX INPUT VALIDATION, FIX API RENDERING, REVIEW, SEND //
 function App() {
   const navigate = useNavigate();
 
@@ -71,7 +72,8 @@ function App() {
   // LOCATIONS HANDLERS //
   const handleQuery = (locationName) => {
     setIsLoading(true);
-    openTripApi.getLocations(locationName)
+    openTripApi
+      .getLocations(locationName)
       .then((locationsArray) => {
         if (locationsArray.length > 0) {
           setLocations(locationsArray);
@@ -87,7 +89,13 @@ function App() {
       .catch((err) => {
         console.log(err);
         setInfoTooltipStatus('fail');
-        setInfoTooltipMessage(`${err.status === (400 || 404) ? 'No location was found' : 'A problem occurred with the server'}`);
+        setInfoTooltipMessage(
+          `${
+            err.status === (400 || 404)
+              ? 'No location was found'
+              : 'A problem occurred with the server'
+          }`
+        );
         setIsLoading(false);
         setIsInfoTooltipOpen(true);
       });
@@ -101,9 +109,9 @@ function App() {
 
   const handleCardDelete = (locationXid) => {
     // LOGIN LOGIC TO BE ADDED WITH BACKEND PART OF THE PROJECT //
-    setSavedLocations((savedLocationsArray) => savedLocationsArray.filter(
-      (savedLocation) => savedLocation.xid === locationXid
-    ));
+    setSavedLocations((savedLocationsArray) =>
+      savedLocationsArray.filter((savedLocation) => savedLocation.xid === locationXid)
+    );
   };
 
   return (
@@ -131,18 +139,9 @@ function App() {
         onClose={handleClosePopups}
         onSubmit={handleRegistration}
       />
-      <LoginFormPopup
-        isOpen={isLoginFormOpen}
-        onClose={handleClosePopups}
-        onSubmit={handleLogin}
-      />
-      <LocationPopup
-        location={selectedLocation}
-        onClose={handleClosePopups}
-      />
-      <LoadingPopup
-        isOpen={isLoading}
-      />
+      <LoginFormPopup isOpen={isLoginFormOpen} onClose={handleClosePopups} onSubmit={handleLogin} />
+      <LocationPopup location={selectedLocation} onClose={handleClosePopups} />
+      <LoadingPopup isOpen={isLoading} />
       <InfoToolTip
         isOpen={isInfoTooltipOpen}
         onClose={handleClosePopups}

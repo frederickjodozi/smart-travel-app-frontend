@@ -1,12 +1,11 @@
-/* eslint-disable consistent-return */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import { React, useEffect } from 'react';
+/* eslint-disable consistent-return */
+/* eslint-disable no-undef */
+import { useEffect } from 'react';
 import './Popup.css';
 
-function Popup({
-  isOpen, location, onClose, children
-}) {
+function Popup({ isOpen, location, onClose, children }) {
   useEffect(() => {
     if (!isOpen && !location) return;
 

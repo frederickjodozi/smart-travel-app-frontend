@@ -1,4 +1,4 @@
-import { React, useState } from 'react';
+import { useState } from 'react';
 import PopupForm from '../PopupForm/PopupForm';
 import './LoginFormPopup.css';
 
@@ -55,7 +55,13 @@ function LoginFormPopup({ isOpen, onClose, onSubmit }) {
   };
 
   return (
-    <PopupForm isOpen={isOpen} onClose={onClose} onSubmit={handleSubmit} title="Log In" submitText="Log in">
+    <PopupForm
+      isOpen={isOpen}
+      onClose={onClose}
+      onSubmit={handleSubmit}
+      title="Log In"
+      submitText="Log in"
+    >
       <input
         type="text"
         name="email"

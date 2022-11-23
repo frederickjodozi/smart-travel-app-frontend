@@ -1,4 +1,3 @@
-import { React } from 'react';
 import './Footer.css';
 import '../../blocks/wrapper/wrapper.css';
 import linkedInIcon from '../../images/linkedInIcon.svg';

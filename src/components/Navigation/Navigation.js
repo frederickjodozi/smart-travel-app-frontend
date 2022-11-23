@@ -1,12 +1,9 @@
-import { React } from 'react';
 import { Link } from 'react-router-dom';
 import './Navigation.css';
 import homeIcon from '../../images/homeIcon.svg';
 import articlesIcon from '../../images/articlesIcon.svg';
 
-function Navigation({
-  isLoggedIn, onLogout, onSignUpClick, onLoginClick
-}) {
+function Navigation({ isLoggedIn, onLogout, onSignUpClick, onLoginClick }) {
   return (
     <nav className="navigation">
       {isLoggedIn ? (
@@ -18,11 +15,7 @@ function Navigation({
             </Link>
           </li>
           <li className="navigation__item">
-            <img
-              src={articlesIcon}
-              className="navigation__icon"
-              alt="saved articles icon"
-            />
+            <img src={articlesIcon} className="navigation__icon" alt="saved articles icon" />
             <Link to="/saved-articles" className="navigation__link" aria-label="saved articles">
               Saved Articles
             </Link>
