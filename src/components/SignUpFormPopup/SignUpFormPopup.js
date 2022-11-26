@@ -20,17 +20,24 @@ function SignUpFormPopup({ isOpen, onClose, onSubmit }) {
 
   async function handleValidation() {
     const error = {};
+    const validator = {
+      email: /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
+      password: /(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])/
+    };
 
     if (!inputValues.email) {
       error.email = 'Please enter an email address';
-    } else if (inputValues.email.length < 3) {
+    } else if (!validator.email.test(inputValues.email)) {
       error.email = 'Please enter a valid email address';
     }
 
     if (!inputValues.password) {
       error.password = 'Please enter a password';
-    } else if (inputValues.password.length < 6) {
-      error.password = 'Your password must contain at least 6 characters';
+    } else if (inputValues.password.length < 8) {
+      error.password = 'Your password must contain at least 8 alphanumeric characters';
+    } else if (!validator.password.test(inputValues.password)) {
+      error.password =
+        'Please enter at least one uppercase letter, one lowercase letter and one digit';
     } else if (inputValues.password.length > 30) {
       error.password = 'Your password must contain no more than 30 characters';
     }
