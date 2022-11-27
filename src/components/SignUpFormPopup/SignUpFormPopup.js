@@ -78,6 +78,7 @@ function SignUpFormPopup({ isOpen, onClose, onSubmit }) {
         value={inputValues.email}
         onChange={handleInputChange}
         placeholder="Enter your email"
+        autoComplete="off"
       />
       {errorMessages.email && <span className="signupform__error">{errorMessages.email}</span>}
       <input
@@ -89,6 +90,7 @@ function SignUpFormPopup({ isOpen, onClose, onSubmit }) {
         value={inputValues.password}
         onChange={handleInputChange}
         placeholder="Create a password"
+        autoComplete="off"
       />
       {errorMessages.password && (
         <span className="signupform__error">{errorMessages.password}</span>
