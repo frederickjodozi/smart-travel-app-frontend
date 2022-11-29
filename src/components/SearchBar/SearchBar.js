@@ -1,3 +1,5 @@
+/* eslint-disable consistent-return */
+/* eslint-disable no-undef */
 import { useState, useEffect } from 'react';
 import './SearchBar.css';
 import smallTriangle from '../../images/smallTriangle.svg';
