@@ -91,7 +91,7 @@ function SearchBar({ onQuery }) {
             aria-label="query"
             value={query}
             onChange={handleQueryChange}
-            placeholder="Your Search to anywhere..."
+            placeholder="Enter a location..."
             autoComplete="off"
           />
           <button
