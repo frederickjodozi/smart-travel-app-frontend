@@ -12,7 +12,6 @@ import Footer from '../Footer/Footer';
 import './App.css';
 import '../../blocks/background/background.css';
 
-// TODO: COMMIT IDENT AND IMPORT CHANGES, FIX INPUT VALIDATION, FIX API RENDERING, REVIEW, SEND //
 function App() {
   const navigate = useNavigate();
 
@@ -70,10 +69,10 @@ function App() {
   };
 
   // LOCATIONS HANDLERS //
-  const handleQuery = (locationName) => {
+  const handleQuery = (locationName, locationType) => {
     setIsLoading(true);
     openTripApi
-      .getLocations(locationName)
+      .getLocations(locationName, locationType)
       .then((locationsArray) => {
         if (locationsArray.length > 0) {
           setLocations(locationsArray);
