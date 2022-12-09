@@ -1,7 +1,7 @@
 /* eslint-disable consistent-return */
 /* eslint-disable no-undef */
 import { useState, useEffect } from 'react';
-import './SearchBar.css';
+import './Searchbar.css';
 import smallTriangle from '../../images/smallTriangle.svg';
 import smallTriangleSelected from '../../images/smallTriangleSelected.svg';
 import singleDownArrow from '../../images/singleDownArrow.svg';
@@ -44,11 +44,7 @@ function SearchBar({ onQuery }) {
 
   // QUERY TYPE BUTTON CLICK HANDLER //
   const handleQueryListClick = () => {
-    if (isQueryListOpen) {
-      setIsQueryListOpen(false);
-      return;
-    }
-    setIsQueryListOpen(true);
+    setIsQueryListOpen(!isQueryListOpen);
   };
 
   // VALIDATION HANDLER //
