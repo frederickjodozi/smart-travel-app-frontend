@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import * as openTripApi from '../../utils/openTripApi';
@@ -13,6 +14,7 @@ import './App.css';
 import '../../blocks/background/background.css';
 
 function App() {
+  // OPTIMIZE IMAGE, CHECK FONTS, PUT API VARIABLES IN A SEPERATE FILE?
   const navigate = useNavigate();
 
   // LOGIN STATES //
