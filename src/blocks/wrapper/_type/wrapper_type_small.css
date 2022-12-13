@@ -1,0 +1,15 @@
+.wrapper_type_small {
+  margin: 0 5%;
+}
+
+@media (max-width: 768px) {
+  .wrapper_type_small {
+    margin: 0 4%;
+  }
+}
+
+@media (max-width: 320px) {
+  .wrapper_type_small {
+    margin: 0 3%;
+  }
+}
