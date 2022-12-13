@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import * as openTripApi from '../../utils/openTripApi';
 import Header from '../Header/Header';
@@ -32,6 +32,15 @@ function App() {
   const [isInfoTooltipOpen, setIsInfoTooltipOpen] = useState(false);
   const [infoTooltipStatus, setInfoTooltipStatus] = useState('');
   const [infoTooltipMessage, setInfoTooltipMessage] = useState('');
+
+  // LOCATIONS CALL ON PAGE LOAD //
+  useEffect(() => {
+    const storedLocations = localStorage.getItem('locations');
+    if (storedLocations) {
+      setLocations(JSON.parse(storedLocations));
+      navigate('/locations');
+    }
+  }, []);
 
   // OPEN POPUP HANDLERS //
   const handleSignUpClick = () => {
@@ -76,6 +85,7 @@ function App() {
       .getLocations(locationName, locationType)
       .then((locationsArray) => {
         if (locationsArray.length > 0) {
+          localStorage.setItem('locations', JSON.stringify(locationsArray));
           setLocations(locationsArray);
           setIsLoading(false);
           navigate('/locations');
