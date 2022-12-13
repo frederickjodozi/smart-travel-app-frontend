@@ -14,7 +14,6 @@ import './App.css';
 import '../../blocks/background/background.css';
 
 function App() {
-  // OPTIMIZE IMAGE, CHECK FONTS, PUT API VARIABLES IN A SEPERATE FILE?
   const navigate = useNavigate();
 
   // LOGIN STATES //
