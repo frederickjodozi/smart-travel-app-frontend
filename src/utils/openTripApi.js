@@ -5,6 +5,9 @@ export const SEARCH_RADIUS = '5000';
 export const DATA_SOURCE = 'osm';
 export const RATING = '3';
 export const RESPONSE_FORMAT = 'json';
+
+/* RESPONSE LIMITED TO 3 LOCATIONS TO AVOID RESPONSE STATUS 429: "TOO MANY REQUESTS".
+RESPONSE CAN BE INCREASED TO 4 OR 5 TO TEST "SHOW MORE" FUNCTIONALITY FROM LOCATIONS.JS */
 export const RESPONSE_LIMIT = '3';
 
 const getResponseData = (res) => {
