@@ -16,7 +16,7 @@
 .navigation__link {
   margin: 0 16px 0 0;
   color: #ffffff;
-  font-family: 'Inter';
+  font-family: 'Inter', sans-serif;
   font-style: normal;
   font-weight: 500;
   font-size: 16px;

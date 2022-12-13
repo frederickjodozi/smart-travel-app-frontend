@@ -17,7 +17,7 @@
 .loginform__error {
   color: #FF0000;
   padding: 12px 24px;
-  font-family: 'Inter';
+  font-family: 'Inter', sans-serif;
   font-style: normal;
   font-weight: 400;
   font-size: 14px;

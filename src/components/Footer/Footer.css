@@ -19,7 +19,7 @@
 .footer__link {
   text-decoration: none;
   color: #FFFFFF;
-  font-family: 'Inter';
+  font-family: 'Inter', sans-serif;
   font-style: normal;
   font-weight: 500;
   font-size: 16px;
@@ -36,7 +36,7 @@
   margin: 0;
   align-self: flex-end;
   color: #CFCFCF;
-  font-family: 'Inter';
+  font-family: 'Inter', sans-serif;
   font-style: normal;
   font-weight: 500;
   font-size: 16px;
