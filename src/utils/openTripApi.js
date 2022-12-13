@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 export const BASE_URL = 'https://api.opentripmap.com/0.1/en/places';
 export const API_KEY = '5ae2e3f221c38a28845f05b6fd4cf53d0344c5ac0cdf7e621bc6ee07';
 export const SEARCH_RADIUS = '5000';
