@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/smart-travel-app-frontend/static/css/main.9ef385e3.css",
-    "main.js": "/smart-travel-app-frontend/static/js/main.1ecf94f0.js",
+    "main.js": "/smart-travel-app-frontend/static/js/main.79b68f69.js",
     "static/media/backgroundImage.jpg": "/smart-travel-app-frontend/static/media/backgroundImage.7509783746bbdfbee4ff.jpg",
     "static/media/authorPicture.jpg": "/smart-travel-app-frontend/static/media/authorPicture.db9ea72887893d731df5.jpg",
     "static/media/Inter-Medium.woff?v=3.18": "/smart-travel-app-frontend/static/media/Inter-Medium.f5549f68ca7db479bc7d.woff",
@@ -26,10 +26,10 @@
     "static/media/saveRectangle.svg": "/smart-travel-app-frontend/static/media/saveRectangle.688670fecaf2f6514ded.svg",
     "static/media/closeIcon.svg": "/smart-travel-app-frontend/static/media/closeIcon.dda14158995ace78314c.svg",
     "main.9ef385e3.css.map": "/smart-travel-app-frontend/static/css/main.9ef385e3.css.map",
-    "main.1ecf94f0.js.map": "/smart-travel-app-frontend/static/js/main.1ecf94f0.js.map"
+    "main.79b68f69.js.map": "/smart-travel-app-frontend/static/js/main.79b68f69.js.map"
   },
   "entrypoints": [
     "static/css/main.9ef385e3.css",
-    "static/js/main.1ecf94f0.js"
+    "static/js/main.79b68f69.js"
   ]
 }
