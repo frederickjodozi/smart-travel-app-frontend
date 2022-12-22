@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 /* eslint-disable no-console */
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -38,7 +39,7 @@ function App() {
     const storedLocations = localStorage.getItem('locations');
     if (storedLocations) {
       setLocations(JSON.parse(storedLocations));
-      navigate('/locations');
+      navigate('/smart-travel-app-frontend/locations');
     }
   }, []);
 
@@ -88,7 +89,7 @@ function App() {
           localStorage.setItem('locations', JSON.stringify(locationsArray));
           setLocations(locationsArray);
           setIsLoading(false);
-          navigate('/locations');
+          navigate('/smart-travel-app-frontend/locations');
         } else {
           setInfoTooltipStatus('fail');
           setInfoTooltipMessage('No location was found');
@@ -114,7 +115,7 @@ function App() {
   const handleCardSave = (location) => {
     // LOGIN LOGIC TO BE ADDED WITH BACKEND PART OF THE PROJECT //
     setSavedLocations([...savedLocations, location]);
-    navigate('/saved-locations');
+    navigate('/smart-travel-app-frontend/saved-locations');
   };
 
   const handleCardDelete = (locationXid) => {

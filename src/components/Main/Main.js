@@ -18,7 +18,7 @@ function Main({
     <main className="main">
       <Routes>
         <Route
-          path="/"
+          path="/smart-travel-app-frontend"
           element={
             <>
               <h1 className="main__title">Travel Smart</h1>
@@ -31,7 +31,7 @@ function Main({
           }
         />
         <Route
-          path="/locations"
+          path="/smart-travel-app-frontend/locations"
           element={
             <ProtectedRoute routeAuth={locations}>
               <h2 className="main__subtitle">Location results for your search</h2>
@@ -46,7 +46,7 @@ function Main({
           }
         />
         <Route
-          path="/saved-locations"
+          path="/smart-travel-app-frontend/saved-locations"
           element={
             <ProtectedRoute routeAuth={isLoggedIn}>
               <h2 className="main__subtitle">Your saved locations</h2>

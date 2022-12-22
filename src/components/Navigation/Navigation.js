@@ -10,13 +10,13 @@ function Navigation({ isLoggedIn, onLogout, onSignUpClick, onLoginClick }) {
         <ul className="navigation__list">
           <li className="navigation__item">
             <img src={homeIcon} className="navigation__icon" alt="home icon" />
-            <Link to="/" className="navigation__link" aria-label="home">
+            <Link to="/smart-travel-app-frontend" className="navigation__link" aria-label="home">
               Home
             </Link>
           </li>
           <li className="navigation__item">
             <img src={articlesIcon} className="navigation__icon" alt="saved articles icon" />
-            <Link to="/saved-articles" className="navigation__link" aria-label="saved articles">
+            <Link to="/smart-travel-app-frontend/saved-articles" className="navigation__link" aria-label="saved articles">
               Saved Articles
             </Link>
           </li>

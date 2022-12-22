@@ -4,7 +4,7 @@ function ProtectedRoute({ routeAuth, children }) {
   if (routeAuth === true || routeAuth.length > 0) {
     return children;
   }
-  return <Navigate to="/" />;
+  return <Navigate to="/smart-travel-app-frontend/" />;
 }
 
 export default ProtectedRoute;
