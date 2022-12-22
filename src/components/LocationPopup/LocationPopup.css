@@ -1,0 +1,74 @@
+.locationpopup {
+  position: relative;
+  width: 75%;
+  margin: auto;
+  border-bottom: 2px solid #FFF;
+}
+
+.locationpopup__text {
+  margin: 0;
+  padding: 0 0 16px 0;
+  font-size: 18px;
+  line-height: 24px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  text-align: justify;
+}
+
+.locationpopup__close-button {
+  width: 40px;
+  height: 40px;
+  position: absolute;
+  top: -36px;
+  right: -44px;
+  background-color: rgba(0, 0, 0, 0);
+  background-image: url(../../images/closeIcon.svg);
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  border: none;
+}
+
+.locationpopup__close-button:hover {
+  cursor: pointer;
+  opacity: 60%;
+}
+
+@media (max-width: 768px) {
+  .locationpopup__text {
+    padding: 0 0 12px 0;
+    font-size: 16px;
+    line-height: 20px;
+  }
+
+  .locationpopup__close-button {
+    width: 36px;
+    height: 36px;
+    top: -32px;
+    right: -40px;
+  }
+}
+
+@media (max-width: 480px) {
+  .locationpopup__text {
+    padding: 0 0 8px 0;
+    font-size: 13px;
+    line-height: 18px;
+  }
+
+  .locationpopup__close-button {
+    width: 32px;
+    height: 32px;
+    top: -28px;
+    right: -36px;
+  }
+}
+
+@media (max-width: 320px) {
+  .locationpopup__close-button {
+    width: 28px;
+    height: 28px;
+    top: -24px;
+    right: -32px;
+  }
+}

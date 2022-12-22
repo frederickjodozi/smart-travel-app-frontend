@@ -1,0 +1,26 @@
+.header {
+  padding: 25px 0 0 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header__logo {
+  padding: 0 0 0 5px;
+  width: 60px;
+  height: 60px;
+}
+
+@media (max-width: 768px) {
+  .header__logo {
+    width: 45px;
+    height: 45px;
+  }
+}
+
+@media (max-width: 480px) {
+  .header__logo {
+    width: 40px;
+    height: 40px;
+  }
+}
