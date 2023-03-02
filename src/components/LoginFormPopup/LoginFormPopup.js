@@ -2,21 +2,14 @@ import { useState } from 'react';
 import PopupForm from '../PopupForm/PopupForm';
 import './LoginFormPopup.css';
 
-function LoginFormPopup({ isOpen, onClose, onSubmit }) {
+function LoginFormPopup({ isOpen, onClose, onFormSwitch, onSubmit }) {
   const [inputValues, setInputValues] = useState({
     email: '',
     password: ''
   });
 
   const [errorMessages, setErrorMessages] = useState({});
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setInputValues({
-      ...inputValues,
-      [name]: value
-    });
-  };
+  const [disableSubmitButton, setDisableSubmitButton] = useState(true);
 
   async function handleValidation() {
     const error = {};
@@ -45,29 +38,43 @@ function LoginFormPopup({ isOpen, onClose, onSubmit }) {
     return error;
   }
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setInputValues({
+      ...inputValues,
+      [name]: value
+    });
     handleValidation().then((error) => {
       if (Object.keys(error).length === 0) {
-        onSubmit(inputValues);
-        setInputValues({
-          email: '',
-          password: ''
-        });
         setErrorMessages({});
+        setDisableSubmitButton(false);
       } else {
         setErrorMessages(error);
       }
     });
   };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    onSubmit(inputValues);
+    setInputValues({
+      email: '',
+      password: ''
+    });
+    setErrorMessages({});
+    setDisableSubmitButton(true);
+  };
+
   return (
     <PopupForm
       isOpen={isOpen}
       onClose={onClose}
+      onFormSwitch={onFormSwitch}
       onSubmit={handleSubmit}
       title="Log In"
       submitText="Log in"
+      disableSubmitButton={disableSubmitButton}
+      linkText="Sign In"
     >
       <input
         type="text"

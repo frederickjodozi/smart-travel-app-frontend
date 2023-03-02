@@ -148,9 +148,10 @@ function App() {
       <SignUpFormPopup
         isOpen={isSignUpFormOpen}
         onClose={handleClosePopups}
+        onFormSwitch={handleLoginClick}
         onSubmit={handleRegistration}
       />
-      <LoginFormPopup isOpen={isLoginFormOpen} onClose={handleClosePopups} onSubmit={handleLogin} />
+      <LoginFormPopup isOpen={isLoginFormOpen} onClose={handleClosePopups} onFormSwitch={handleSignUpClick} onSubmit={handleLogin} />
       <LocationPopup location={selectedLocation} onClose={handleClosePopups} />
       <LoadingPopup isOpen={isLoading} />
       <InfoToolTip

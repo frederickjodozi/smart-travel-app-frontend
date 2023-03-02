@@ -2,21 +2,15 @@ import { useState } from 'react';
 import PopupForm from '../PopupForm/PopupForm';
 import './SignUpFormPopup.css';
 
-function SignUpFormPopup({ isOpen, onClose, onSubmit }) {
+function SignUpFormPopup({ isOpen, onClose, onFormSwitch, onSubmit }) {
   const [inputValues, setInputValues] = useState({
+    name: '',
     email: '',
     password: ''
   });
 
   const [errorMessages, setErrorMessages] = useState({});
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setInputValues({
-      ...inputValues,
-      [name]: value
-    });
-  };
+  const [disableSubmitButton, setDisableSubmitButton] = useState(true);
 
   async function handleValidation() {
     const error = {};
@@ -24,6 +18,14 @@ function SignUpFormPopup({ isOpen, onClose, onSubmit }) {
       email: /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
       password: /(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])/
     };
+
+    if (!inputValues.name) {
+      error.name = 'Please enter a username';
+    } else if (inputValues.name.length < 2) {
+      error.name = 'Please enter a username that has at least two characters';
+    } else if (inputValues.name.length > 30) {
+      error.name = "Your username can't contain more than 30 characters";
+    }
 
     if (!inputValues.email) {
       error.email = 'Please enter an email address';
@@ -45,30 +47,57 @@ function SignUpFormPopup({ isOpen, onClose, onSubmit }) {
     return error;
   }
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setInputValues({
+      ...inputValues,
+      [name]: value
+    });
     handleValidation().then((error) => {
       if (Object.keys(error).length === 0) {
-        onSubmit(inputValues);
-        setInputValues({
-          email: '',
-          password: ''
-        });
         setErrorMessages({});
+        setDisableSubmitButton(false);
       } else {
         setErrorMessages(error);
       }
     });
   };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    onSubmit(inputValues);
+    setInputValues({
+      name: '',
+      email: '',
+      password: ''
+    });
+    setErrorMessages({});
+    setDisableSubmitButton(true);
+  };
+
   return (
     <PopupForm
       isOpen={isOpen}
       onClose={onClose}
+      onFormSwitch={onFormSwitch}
       onSubmit={handleSubmit}
       title="Sign Up"
       submitText="Create Profile"
+      disableSubmitButton={disableSubmitButton}
+      linkText="Log In"
     >
+      <input
+        type="text"
+        name="name"
+        id="signupform__name"
+        className={`signupform__input ${errorMessages.name ? 'signupform__input-error' : ''}`}
+        aria-label="name input"
+        value={inputValues.name}
+        onChange={handleInputChange}
+        placeholder="Enter your username"
+        autoComplete="off"
+      />
+      {errorMessages.name && <span className="signupform__error">{errorMessages.name}</span>}
       <input
         type="text"
         name="email"
