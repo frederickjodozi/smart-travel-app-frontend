@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import PopupForm from '../PopupForm/PopupForm';
 import './LoginFormPopup.css';
 
@@ -11,48 +11,53 @@ function LoginFormPopup({ isOpen, onClose, onFormSwitch, onSubmit }) {
   const [errorMessages, setErrorMessages] = useState({});
   const [disableSubmitButton, setDisableSubmitButton] = useState(true);
 
-  async function handleValidation() {
-    const error = {};
-    const validator = {
-      email: /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
-      password: /(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])/
-    };
-
-    if (!inputValues.email) {
-      error.email = 'Please enter your email address';
-    } else if (!validator.email.test(inputValues.email)) {
-      error.email = 'Please enter a valid email address';
-    }
-
-    if (!inputValues.password) {
-      error.password = 'Please enter your password';
-    } else if (inputValues.password.length < 8) {
-      error.password = 'Registered passwords contain at least 8 alphanumeric characters';
-    } else if (!validator.password.test(inputValues.password)) {
-      error.password =
-        'Registered passwords contain upper and lowercase letters and a at least one digit';
-    } else if (inputValues.password.length > 30) {
-      error.password = 'Registered passwords contain no more than 30 characters';
-    }
-
-    return error;
-  }
-
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setInputValues({
       ...inputValues,
       [name]: value
     });
-    handleValidation().then((error) => {
-      if (Object.keys(error).length === 0) {
-        setErrorMessages({});
-        setDisableSubmitButton(false);
-      } else {
-        setErrorMessages(error);
-      }
-    });
   };
+
+  async function handleValidation() {
+    const errors = {};
+    const validator = {
+      email: /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
+      password: /(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])/
+    };
+
+    if (!inputValues.email) {
+      errors.email = 'Please enter your email address';
+    } else if (!validator.email.test(inputValues.email)) {
+      errors.email = 'Please enter a valid email address';
+    }
+
+    if (!inputValues.password) {
+      errors.password = 'Please enter your password';
+    } else if (inputValues.password.length < 8) {
+      errors.password = 'Registered passwords contain at least 8 alphanumeric characters';
+    } else if (!validator.password.test(inputValues.password)) {
+      errors.password =
+        'Registered passwords contain upper and lowercase letters and a at least one digit';
+    } else if (inputValues.password.length > 30) {
+      errors.password = 'Registered passwords contain no more than 30 characters';
+    }
+
+    setErrorMessages(errors);
+
+    if (Object.keys(errors).length === 0) {
+      setDisableSubmitButton(false);
+    }
+  }
+
+  useEffect(() => {
+    if (
+      inputValues.email.length > 0 ||
+      inputValues.password.length > 0
+    ) {
+      handleValidation();
+    }
+  }, [inputValues]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -61,7 +66,6 @@ function LoginFormPopup({ isOpen, onClose, onFormSwitch, onSubmit }) {
       email: '',
       password: ''
     });
-    setErrorMessages({});
     setDisableSubmitButton(true);
   };
 

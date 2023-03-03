@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import PopupForm from '../PopupForm/PopupForm';
 import './SignUpFormPopup.css';
 
@@ -12,56 +12,62 @@ function SignUpFormPopup({ isOpen, onClose, onFormSwitch, onSubmit, signUpError 
   const [errorMessages, setErrorMessages] = useState({});
   const [disableSubmitButton, setDisableSubmitButton] = useState(true);
 
-  async function handleValidation() {
-    const error = {};
-    const validator = {
-      email: /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
-      password: /(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])/
-    };
-
-    if (!inputValues.name) {
-      error.name = 'Please enter a username';
-    } else if (inputValues.name.length < 2) {
-      error.name = 'Please enter a username that has at least two characters';
-    } else if (inputValues.name.length > 30) {
-      error.name = "Your username can't contain more than 30 characters";
-    }
-
-    if (!inputValues.email) {
-      error.email = 'Please enter an email address';
-    } else if (!validator.email.test(inputValues.email)) {
-      error.email = 'Please enter a valid email address';
-    }
-
-    if (!inputValues.password) {
-      error.password = 'Please enter a password';
-    } else if (inputValues.password.length < 8) {
-      error.password = 'Your password must contain at least 8 alphanumeric characters';
-    } else if (!validator.password.test(inputValues.password)) {
-      error.password =
-        'Please enter at least one uppercase letter, one lowercase letter and one digit';
-    } else if (inputValues.password.length > 30) {
-      error.password = 'Your password must contain no more than 30 characters';
-    }
-
-    return error;
-  }
-
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setInputValues({
       ...inputValues,
       [name]: value
     });
-    handleValidation().then((error) => {
-      if (Object.keys(error).length === 0) {
-        setErrorMessages({});
-        setDisableSubmitButton(false);
-      } else {
-        setErrorMessages(error);
-      }
-    });
   };
+
+  async function handleValidation() {
+    const errors = {};
+    const validator = {
+      email: /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
+      password: /(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])/
+    };
+
+    if (!inputValues.name) {
+      errors.name = 'Please enter a username';
+    } else if (inputValues.name.length < 2) {
+      errors.name = 'Please enter a username that has at least two characters';
+    } else if (inputValues.name.length > 30) {
+      errors.name = "Your username can't contain more than 30 characters";
+    }
+
+    if (!inputValues.email) {
+      errors.email = 'Please enter an email address';
+    } else if (!validator.email.test(inputValues.email)) {
+      errors.email = 'Please enter a valid email address';
+    }
+
+    if (!inputValues.password) {
+      errors.password = 'Please enter a password';
+    } else if (inputValues.password.length < 8) {
+      errors.password = 'Your password must contain at least 8 alphanumeric characters';
+    } else if (!validator.password.test(inputValues.password)) {
+      errors.password =
+        'Please enter at least one uppercase letter, one lowercase letter and one digit';
+    } else if (inputValues.password.length > 30) {
+      errors.password = 'Your password must contain no more than 30 characters';
+    }
+
+    setErrorMessages(errors);
+
+    if (Object.keys(errors).length === 0) {
+      setDisableSubmitButton(false);
+    }
+  };
+
+  useEffect(() => {
+    if (
+      inputValues.name.length > 0 ||
+      inputValues.email.length > 0 ||
+      inputValues.password.length > 0
+    ) {
+      handleValidation();
+    }
+  }, [inputValues]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -71,7 +77,6 @@ function SignUpFormPopup({ isOpen, onClose, onFormSwitch, onSubmit, signUpError 
       email: '',
       password: ''
     });
-    setErrorMessages({});
     setDisableSubmitButton(true);
   };
 
@@ -124,9 +129,7 @@ function SignUpFormPopup({ isOpen, onClose, onFormSwitch, onSubmit, signUpError 
       {errorMessages.password && (
         <span className="signupform__error">{errorMessages.password}</span>
       )}
-      {signUpError && (
-        <span className="signupform__error">{signUpError}</span>
-      )}
+      {signUpError && <span className="signupform__error">{signUpError}</span>}
     </PopupForm>
   );
 }
