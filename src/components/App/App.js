@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import * as openTripApi from '../../utils/openTripApi';
+import userApi from '../../utils/userApi';
 import Header from '../Header/Header';
 import Main from '../Main/Main';
 import SignUpFormPopup from '../SignUpFormPopup/SignUpFormPopup';
@@ -27,6 +28,7 @@ function App() {
 
   // POPUP STATES //
   const [isSignUpFormOpen, setIsSignUpFormOpen] = useState(false);
+  const [signUpError, setSignUpError] = useState('');
   const [isLoginFormOpen, setIsLoginFormOpen] = useState(false);
   const [selectedLocation, setSelectedLocation] = useState(null);
 
@@ -65,9 +67,20 @@ function App() {
   };
 
   // USER REGISTRATION AND LOGIN HANDLERS //
-  const handleRegistration = () => {
-    // REGISTRATION LOGIC TO BE ADDED WITH BACKEND PART OF THE PROJECT //
-    handleClosePopups();
+  const handleRegistration = ({ email, password, name }) => {
+    userApi.registerUser({ email, password, name })
+      .then((res) => {
+        if (res._id) {
+          handleClosePopups();
+          setInfoTooltipStatus('success');
+          setInfoTooltipMessage('Registration successful!')
+          setIsInfoTooltipOpen(true);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        setSignUpError(`${err.status}: ${err.statusText}`);
+      });
   };
 
   const handleLogin = () => {
@@ -150,6 +163,7 @@ function App() {
         onClose={handleClosePopups}
         onFormSwitch={handleLoginClick}
         onSubmit={handleRegistration}
+        signUpError={signUpError}
       />
       <LoginFormPopup isOpen={isLoginFormOpen} onClose={handleClosePopups} onFormSwitch={handleSignUpClick} onSubmit={handleLogin} />
       <LocationPopup location={selectedLocation} onClose={handleClosePopups} />
@@ -159,6 +173,7 @@ function App() {
         onClose={handleClosePopups}
         status={infoTooltipStatus}
         message={infoTooltipMessage}
+        onFormSwitch={handleLoginClick}
       />
     </div>
   );

@@ -2,7 +2,7 @@ import { useState } from 'react';
 import PopupForm from '../PopupForm/PopupForm';
 import './SignUpFormPopup.css';
 
-function SignUpFormPopup({ isOpen, onClose, onFormSwitch, onSubmit }) {
+function SignUpFormPopup({ isOpen, onClose, onFormSwitch, onSubmit, signUpError }) {
   const [inputValues, setInputValues] = useState({
     name: '',
     email: '',
@@ -123,6 +123,9 @@ function SignUpFormPopup({ isOpen, onClose, onFormSwitch, onSubmit }) {
       />
       {errorMessages.password && (
         <span className="signupform__error">{errorMessages.password}</span>
+      )}
+      {signUpError && (
+        <span className="signupform__error">{signUpError}</span>
       )}
     </PopupForm>
   );

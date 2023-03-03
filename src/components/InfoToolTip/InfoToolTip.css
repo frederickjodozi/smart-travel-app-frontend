@@ -60,6 +60,25 @@
   color: #FFFFFF;
 }
 
+.infotooltip__switch-button {
+  width: 100%;
+  padding: 16px 0;
+  border: none;
+  background-color: #FFFFFF;
+  color: #2F71E5;
+  font-family: 'Inter', sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 20px;
+}
+
+.infotooltip__switch-button:hover {
+  cursor: pointer;
+  color:  #0255E5;
+  text-decoration: underline;
+}
+
 .infotooltip__close-button {
   width: 40px;
   height: 40px;
@@ -115,6 +134,11 @@
     line-height: 20px;
   }
 
+  .infotooltip__switch-button {
+    font-size: 14px;
+    line-height: 18px;
+  }
+
   .infotooltip__close-button {
     width: 36px;
     height: 36px;
@@ -149,6 +173,10 @@
     line-height: 18px;
   }
 
+  .infotooltip__switch-button {
+    font-size: 13px;
+  }
+
   .infotooltip__close-button {
     width: 32px;
     height: 32px;
@@ -168,6 +196,10 @@
   .infotooltip__button {
     width: 108px;
     height: 45px;
+    font-size: 12px;
+  }
+
+  .infotooltip__switch-button {
     font-size: 12px;
   }
 

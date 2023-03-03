@@ -10,7 +10,7 @@ class UserApi {
     return res.json();
   }
 
-  registerUser(email, password, name) {
+  registerUser({ email, password, name }) {
     return fetch(`${this._baseUrl}/users/register`, {
       method: 'POST',
       headers: {
