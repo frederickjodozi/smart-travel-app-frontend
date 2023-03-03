@@ -3,6 +3,7 @@ import PopupForm from '../PopupForm/PopupForm';
 import './SignUpFormPopup.css';
 
 function SignUpFormPopup({ isOpen, onClose, onFormSwitch, onSubmit, signUpError }) {
+  // STATE VARIABLES //
   const [inputValues, setInputValues] = useState({
     name: '',
     email: '',
@@ -12,6 +13,7 @@ function SignUpFormPopup({ isOpen, onClose, onFormSwitch, onSubmit, signUpError 
   const [errorMessages, setErrorMessages] = useState({});
   const [disableSubmitButton, setDisableSubmitButton] = useState(true);
 
+  // HANDLE INPUT CHANGE, VALIDATION AND SUBMIT //
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setInputValues({
@@ -57,17 +59,7 @@ function SignUpFormPopup({ isOpen, onClose, onFormSwitch, onSubmit, signUpError 
     if (Object.keys(errors).length === 0) {
       setDisableSubmitButton(false);
     }
-  };
-
-  useEffect(() => {
-    if (
-      inputValues.name.length > 0 ||
-      inputValues.email.length > 0 ||
-      inputValues.password.length > 0
-    ) {
-      handleValidation();
-    }
-  }, [inputValues]);
+  }
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -79,6 +71,17 @@ function SignUpFormPopup({ isOpen, onClose, onFormSwitch, onSubmit, signUpError 
     });
     setDisableSubmitButton(true);
   };
+
+  // RUN VALIDATION WHEN INPUT VALUES CHANGES //
+  useEffect(() => {
+    if (
+      inputValues.name.length > 0 ||
+      inputValues.email.length > 0 ||
+      inputValues.password.length > 0
+    ) {
+      handleValidation();
+    }
+  }, [inputValues]);
 
   return (
     <PopupForm

@@ -3,6 +3,7 @@ import PopupForm from '../PopupForm/PopupForm';
 import './LoginFormPopup.css';
 
 function LoginFormPopup({ isOpen, onClose, onFormSwitch, onSubmit }) {
+  // STATE VARIABLES //
   const [inputValues, setInputValues] = useState({
     email: '',
     password: ''
@@ -11,6 +12,7 @@ function LoginFormPopup({ isOpen, onClose, onFormSwitch, onSubmit }) {
   const [errorMessages, setErrorMessages] = useState({});
   const [disableSubmitButton, setDisableSubmitButton] = useState(true);
 
+  // HANDLE INPUT CHANGE, VALIDATION AND SUBMIT //
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setInputValues({
@@ -50,15 +52,6 @@ function LoginFormPopup({ isOpen, onClose, onFormSwitch, onSubmit }) {
     }
   }
 
-  useEffect(() => {
-    if (
-      inputValues.email.length > 0 ||
-      inputValues.password.length > 0
-    ) {
-      handleValidation();
-    }
-  }, [inputValues]);
-
   const handleSubmit = (e) => {
     e.preventDefault();
     onSubmit(inputValues);
@@ -68,6 +61,13 @@ function LoginFormPopup({ isOpen, onClose, onFormSwitch, onSubmit }) {
     });
     setDisableSubmitButton(true);
   };
+
+  // RUN VALIDATION WHEN INPUT VALUES CHANGES //
+  useEffect(() => {
+    if (inputValues.email.length > 0 || inputValues.password.length > 0) {
+      handleValidation();
+    }
+  }, [inputValues]);
 
   return (
     <PopupForm
