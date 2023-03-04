@@ -11,6 +11,7 @@ function SignUpFormPopup({ isOpen, onClose, onFormSwitch, onSubmit, signUpError 
   });
 
   const [errorMessages, setErrorMessages] = useState({});
+  const [signUpErrorMessage, setSignUpErrorMessage] = useState('');
   const [disableSubmitButton, setDisableSubmitButton] = useState(true);
 
   // HANDLE INPUT CHANGE, VALIDATION AND SUBMIT //
@@ -83,6 +84,18 @@ function SignUpFormPopup({ isOpen, onClose, onFormSwitch, onSubmit, signUpError 
     }
   }, [inputValues]);
 
+  // STORE SERVER ERROR MESSAGES IN STATE VARIABLE //
+  useEffect(() => {
+    setSignUpErrorMessage(signUpError);
+  }, [signUpError]);
+
+  // RESET SERVER ERROR MESSAGES ON INPUT CHANGE //
+  useEffect(() => {
+    if (signUpErrorMessage.length > 0) {
+      setSignUpErrorMessage('');
+    }
+  }, [inputValues]);
+
   return (
     <PopupForm
       isOpen={isOpen}
@@ -132,7 +145,7 @@ function SignUpFormPopup({ isOpen, onClose, onFormSwitch, onSubmit, signUpError 
       {errorMessages.password && (
         <span className="signupform__error">{errorMessages.password}</span>
       )}
-      {signUpError && <span className="signupform__error">{signUpError}</span>}
+      {signUpErrorMessage && <span className="signupform__error">{signUpErrorMessage}</span>}
     </PopupForm>
   );
 }
