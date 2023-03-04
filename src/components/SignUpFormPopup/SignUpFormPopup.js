@@ -14,6 +14,18 @@ function SignUpFormPopup({ isOpen, onClose, onFormSwitch, onSubmit, signUpError 
   const [signUpErrorMessage, setSignUpErrorMessage] = useState('');
   const [disableSubmitButton, setDisableSubmitButton] = useState(true);
 
+  // RESET INPUT VALUES ON FORM CLOSE //
+  useEffect(() => {
+    setInputValues({
+      name: '',
+      email: '',
+      password: ''
+    });
+
+    setErrorMessages({});
+    setSignUpErrorMessage('');
+  }, [onClose]);
+
   // HANDLE INPUT CHANGE, VALIDATION AND SUBMIT //
   const handleInputChange = (e) => {
     const { name, value } = e.target;
