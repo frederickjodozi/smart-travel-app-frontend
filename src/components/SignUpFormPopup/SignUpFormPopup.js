@@ -14,18 +14,6 @@ function SignUpFormPopup({ isOpen, onClose, onFormSwitch, onSubmit, signUpError 
   const [signUpErrorMessage, setSignUpErrorMessage] = useState('');
   const [disableSubmitButton, setDisableSubmitButton] = useState(true);
 
-  // RESET INPUT VALUES ON FORM CLOSE //
-  useEffect(() => {
-    setInputValues({
-      name: '',
-      email: '',
-      password: ''
-    });
-
-    setErrorMessages({});
-    setSignUpErrorMessage('');
-  }, [onClose]);
-
   // HANDLE INPUT CHANGE, VALIDATION AND SUBMIT //
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -85,6 +73,18 @@ function SignUpFormPopup({ isOpen, onClose, onFormSwitch, onSubmit, signUpError 
     setDisableSubmitButton(true);
   };
 
+  // RESET INPUT VALUES ON FORM CLOSE //
+  useEffect(() => {
+    setInputValues({
+      name: '',
+      email: '',
+      password: ''
+    });
+
+    setErrorMessages({});
+    setSignUpErrorMessage('');
+  }, [onClose]);
+
   // RUN VALIDATION WHEN INPUT VALUES CHANGES //
   useEffect(() => {
     if (
@@ -100,13 +100,6 @@ function SignUpFormPopup({ isOpen, onClose, onFormSwitch, onSubmit, signUpError 
   useEffect(() => {
     setSignUpErrorMessage(signUpError);
   }, [signUpError]);
-
-  // RESET SERVER ERROR MESSAGES ON INPUT CHANGE //
-  useEffect(() => {
-    if (signUpErrorMessage.length > 0) {
-      setSignUpErrorMessage('');
-    }
-  }, [inputValues]);
 
   return (
     <PopupForm
