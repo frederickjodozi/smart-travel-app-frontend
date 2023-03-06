@@ -2,6 +2,7 @@
 /* eslint-disable no-console */
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import UserContext  from '../../contexts/CurrentUserContext';
 import * as openTripApi from '../../utils/openTripApi';
 import userApi from '../../utils/userApi';
 import Header from '../Header/Header';
@@ -29,7 +30,10 @@ function App() {
   // POPUP STATES //
   const [isSignUpFormOpen, setIsSignUpFormOpen] = useState(false);
   const [signUpError, setSignUpError] = useState('');
+
   const [isLoginFormOpen, setIsLoginFormOpen] = useState(false);
+  const [logInError, setLogInError] = useState('');
+
   const [selectedLocation, setSelectedLocation] = useState(null);
 
   const [isInfoTooltipOpen, setIsInfoTooltipOpen] = useState(false);
@@ -83,9 +87,18 @@ function App() {
       });
   };
 
-  const handleLogin = () => {
-    // LOGIN LOGIC TO BE ADDED WITH BACKEND PART OF THE PROJECT //
-    handleClosePopups();
+  const handleLogin = ({ email, password }) => {
+    userApi.loginUser({ email, password })
+      .then((res) => {
+        if (res.token) {
+          localStorage.setItem('jwt', res.token);
+          handleClosePopups();
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        setLogInError(`${err.status}: ${err.statusText}`);
+      });
   };
 
   const handleLogout = () => {
@@ -139,43 +152,45 @@ function App() {
   };
 
   return (
-    <div className="app">
-      <div className="background">
-        <Header
-          isLoggedIn={isLoggedIn}
-          onLogout={handleLogout}
-          onSignUpClick={handleSignUpClick}
-          onLoginClick={handleLoginClick}
+    <UserContext.Provider value = {currentUser}>
+      <div className="app">
+        <div className="background">
+          <Header
+            isLoggedIn={isLoggedIn}
+            onLogout={handleLogout}
+            onSignUpClick={handleSignUpClick}
+            onLoginClick={handleLoginClick}
+          />
+          <Main
+            onQuery={handleQuery}
+            locations={locations}
+            onCardClick={handleCardClick}
+            onCardSave={handleCardSave}
+            isLoggedIn={isLoggedIn}
+            savedLocations={savedLocations}
+            onCardDelete={handleCardDelete}
+          />
+        </div>
+        <Footer />
+        <SignUpFormPopup
+          isOpen={isSignUpFormOpen}
+          onClose={handleClosePopups}
+          onFormSwitch={handleLoginClick}
+          onSubmit={handleRegistration}
+          signUpError={signUpError}
         />
-        <Main
-          onQuery={handleQuery}
-          locations={locations}
-          onCardClick={handleCardClick}
-          onCardSave={handleCardSave}
-          isLoggedIn={isLoggedIn}
-          savedLocations={savedLocations}
-          onCardDelete={handleCardDelete}
+        <LoginFormPopup isOpen={isLoginFormOpen} onClose={handleClosePopups} onFormSwitch={handleSignUpClick} onSubmit={handleLogin} logInError={logInError} />
+        <LocationPopup location={selectedLocation} onClose={handleClosePopups} />
+        <LoadingPopup isOpen={isLoading} />
+        <InfoToolTip
+          isOpen={isInfoTooltipOpen}
+          onClose={handleClosePopups}
+          status={infoTooltipStatus}
+          message={infoTooltipMessage}
+          onFormSwitch={handleLoginClick}
         />
       </div>
-      <Footer />
-      <SignUpFormPopup
-        isOpen={isSignUpFormOpen}
-        onClose={handleClosePopups}
-        onFormSwitch={handleLoginClick}
-        onSubmit={handleRegistration}
-        signUpError={signUpError}
-      />
-      <LoginFormPopup isOpen={isLoginFormOpen} onClose={handleClosePopups} onFormSwitch={handleSignUpClick} onSubmit={handleLogin} />
-      <LocationPopup location={selectedLocation} onClose={handleClosePopups} />
-      <LoadingPopup isOpen={isLoading} />
-      <InfoToolTip
-        isOpen={isInfoTooltipOpen}
-        onClose={handleClosePopups}
-        status={infoTooltipStatus}
-        message={infoTooltipMessage}
-        onFormSwitch={handleLoginClick}
-      />
-    </div>
+    </UserContext.Provider>
   );
 }
 
