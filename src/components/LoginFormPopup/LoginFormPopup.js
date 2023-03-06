@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import PopupForm from '../PopupForm/PopupForm';
 import './LoginFormPopup.css';
 
-function LoginFormPopup({ isOpen, onClose, onFormSwitch, onSubmit }) {
+function LoginFormPopup({ isOpen, onClose, onFormSwitch, onSubmit, logInError }) {
   // STATE VARIABLES //
   const [inputValues, setInputValues] = useState({
     email: '',
@@ -10,6 +10,7 @@ function LoginFormPopup({ isOpen, onClose, onFormSwitch, onSubmit }) {
   });
 
   const [errorMessages, setErrorMessages] = useState({});
+  const [logInErrorMessage, setLogInErrorMessage] = useState('');
   const [disableSubmitButton, setDisableSubmitButton] = useState(true);
 
   // HANDLE INPUT CHANGE, VALIDATION AND SUBMIT //
@@ -62,12 +63,29 @@ function LoginFormPopup({ isOpen, onClose, onFormSwitch, onSubmit }) {
     setDisableSubmitButton(true);
   };
 
+  // RESET INPUT VALUES ON FORM CLOSE //
+  useEffect(() => {
+    setInputValues({
+      name: '',
+      email: '',
+      password: ''
+    });
+
+    setErrorMessages({});
+    setLogInErrorMessage('');
+  }, [onClose]);
+
   // RUN VALIDATION WHEN INPUT VALUES CHANGES //
   useEffect(() => {
     if (inputValues.email.length > 0 || inputValues.password.length > 0) {
       handleValidation();
     }
   }, [inputValues]);
+
+  // STORE SERVER ERROR MESSAGES IN STATE VARIABLE //
+  useEffect(() => {
+    setLogInErrorMessage(logInError);
+  }, [logInError]);
 
   return (
     <PopupForm
@@ -104,6 +122,7 @@ function LoginFormPopup({ isOpen, onClose, onFormSwitch, onSubmit }) {
         autoComplete="off"
       />
       {errorMessages.password && <span className="loginform__error">{errorMessages.password}</span>}
+      {logInErrorMessage && <span className="loginform__error">{logInErrorMessage}</span>}
     </PopupForm>
   );
 }
