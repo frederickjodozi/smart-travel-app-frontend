@@ -21,7 +21,7 @@ function App() {
 
   // LOGIN STATES //
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const [currentUser, setCurrentUser] = useState({});
 
   // UI RENDERED LOCATIONS STATES //
   const [locations, setLocations] = useState([]);
@@ -39,6 +39,24 @@ function App() {
   const [isInfoTooltipOpen, setIsInfoTooltipOpen] = useState(false);
   const [infoTooltipStatus, setInfoTooltipStatus] = useState('');
   const [infoTooltipMessage, setInfoTooltipMessage] = useState('');
+
+  const [isLoading, setIsLoading] = useState(false);
+
+  // USER CALL ON PAGE LOAD //
+  useEffect(() => {
+    const token = localStorage.getItem('jwt');
+    if (token) {
+      userApi.getUserInfo(token)
+        .then((res) => {
+          setCurrentUser(res);
+          setIsLoggedIn(true);
+          navigate('/');
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  }, []);
 
   // LOCATIONS CALL ON PAGE LOAD //
   useEffect(() => {
@@ -92,7 +110,9 @@ function App() {
       .then((res) => {
         if (res.token) {
           localStorage.setItem('jwt', res.token);
+          setIsLoggedIn(true);
           handleClosePopups();
+          navigate('/smart-travel-app-frontend');
         }
       })
       .catch((err) => {
@@ -102,7 +122,9 @@ function App() {
   };
 
   const handleLogout = () => {
+    localStorage.removeItem('jwt');
     setIsLoggedIn(false);
+    navigate('/smart-travel-app-frontend');
   };
 
   // LOCATIONS HANDLERS //
