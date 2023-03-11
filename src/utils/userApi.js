@@ -21,7 +21,7 @@ class UserApi {
     }).then((res) => this._getResponseData(res));
   }
 
-  loginUser(email, password) {
+  loginUser({ email, password }) {
     return fetch(`${this._baseUrl}/users/login`, {
       method: 'POST',
       headers: {
