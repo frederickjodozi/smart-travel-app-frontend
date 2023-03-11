@@ -2,7 +2,7 @@
 /* eslint-disable no-console */
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import UserContext  from '../../contexts/CurrentUserContext';
+import UserContext from '../../contexts/CurrentUserContext';
 import * as openTripApi from '../../utils/openTripApi';
 import userApi from '../../utils/userApi';
 import Header from '../Header/Header';
@@ -46,11 +46,12 @@ function App() {
   useEffect(() => {
     const token = localStorage.getItem('jwt');
     if (token) {
-      userApi.getUserInfo(token)
-        .then((res) => {
-          setCurrentUser(res);
+      userApi
+        .getUserInfo(token)
+        .then((returnedUser) => {
+          setCurrentUser(returnedUser);
           setIsLoggedIn(true);
-          navigate('/');
+          navigate('/smart-travel-app-frontend');
         })
         .catch((err) => {
           console.log(err);
@@ -60,12 +61,23 @@ function App() {
 
   // LOCATIONS CALL ON PAGE LOAD //
   useEffect(() => {
-    const storedLocations = localStorage.getItem('locations');
-    if (storedLocations) {
-      setLocations(JSON.parse(storedLocations));
-      navigate('/smart-travel-app-frontend/locations');
+    const token = localStorage.getItem('jwt');
+    if (token) {
+      userApi
+        .getUserLocations(token)
+        .then((returnedLocations) => {
+          if (returnedLocations.length > 0) {
+            setSavedLocations(returnedLocations);
+            navigate('/smart-travel-app-frontend/saved-locations');
+          } else {
+            console.log('User has no saved locations');
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     }
-  }, []);
+  }, [isLoggedIn]);
 
   // OPEN POPUP HANDLERS //
   const handleSignUpClick = () => {
@@ -90,12 +102,13 @@ function App() {
 
   // USER REGISTRATION AND LOGIN HANDLERS //
   const handleRegistration = ({ email, password, name }) => {
-    userApi.registerUser({ email, password, name })
+    userApi
+      .registerUser({ email, password, name })
       .then((res) => {
         if (res._id) {
           handleClosePopups();
           setInfoTooltipStatus('success');
-          setInfoTooltipMessage('Registration successful!')
+          setInfoTooltipMessage('Registration successful!');
           setIsInfoTooltipOpen(true);
         }
       })
@@ -106,7 +119,8 @@ function App() {
   };
 
   const handleLogin = ({ email, password }) => {
-    userApi.loginUser({ email, password })
+    userApi
+      .loginUser({ email, password })
       .then((res) => {
         if (res.token) {
           localStorage.setItem('jwt', res.token);
@@ -174,7 +188,7 @@ function App() {
   };
 
   return (
-    <UserContext.Provider value = {currentUser}>
+    <UserContext.Provider value={currentUser}>
       <div className="app">
         <div className="background">
           <Header
@@ -201,7 +215,13 @@ function App() {
           onSubmit={handleRegistration}
           signUpError={signUpError}
         />
-        <LoginFormPopup isOpen={isLoginFormOpen} onClose={handleClosePopups} onFormSwitch={handleSignUpClick} onSubmit={handleLogin} logInError={logInError} />
+        <LoginFormPopup
+          isOpen={isLoginFormOpen}
+          onClose={handleClosePopups}
+          onFormSwitch={handleSignUpClick}
+          onSubmit={handleLogin}
+          logInError={logInError}
+        />
         <LocationPopup location={selectedLocation} onClose={handleClosePopups} />
         <LoadingPopup isOpen={isLoading} />
         <InfoToolTip
