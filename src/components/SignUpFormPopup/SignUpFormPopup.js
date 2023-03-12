@@ -10,8 +10,13 @@ function SignUpFormPopup({ isOpen, onClose, onFormSwitch, onSubmit, signUpError 
     password: ''
   });
 
-  const [errorMessages, setErrorMessages] = useState({});
-  const [signUpErrorMessage, setSignUpErrorMessage] = useState('');
+  const [validationErrorMessages, setValidationErrorMessages] = useState({
+    name: '',
+    email: '',
+    password: ''
+  });
+
+  const [serverErrorMessage, setServerErrorMessage] = useState('');
   const [disableSubmitButton, setDisableSubmitButton] = useState(true);
 
   // HANDLE INPUT CHANGE, VALIDATION AND SUBMIT //
@@ -24,7 +29,12 @@ function SignUpFormPopup({ isOpen, onClose, onFormSwitch, onSubmit, signUpError 
   };
 
   async function handleValidation() {
-    const errors = {};
+    const errors = {
+      name: '',
+      email: '',
+      password: ''
+    };
+
     const validator = {
       email: /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
       password: /(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])/
@@ -55,9 +65,9 @@ function SignUpFormPopup({ isOpen, onClose, onFormSwitch, onSubmit, signUpError 
       errors.password = 'Your password must contain no more than 30 characters';
     }
 
-    setErrorMessages(errors);
+    setValidationErrorMessages(errors);
 
-    if (Object.keys(errors).length === 0) {
+    if (Object.values(errors).every((error) => error === '')) {
       setDisableSubmitButton(false);
     }
   }
@@ -70,6 +80,14 @@ function SignUpFormPopup({ isOpen, onClose, onFormSwitch, onSubmit, signUpError 
       email: '',
       password: ''
     });
+
+    setValidationErrorMessages({
+      name: '',
+      email: '',
+      password: ''
+    });
+
+    setServerErrorMessage('');
     setDisableSubmitButton(true);
   };
 
@@ -81,8 +99,14 @@ function SignUpFormPopup({ isOpen, onClose, onFormSwitch, onSubmit, signUpError 
       password: ''
     });
 
-    setErrorMessages({});
-    setSignUpErrorMessage('');
+    setValidationErrorMessages({
+      name: '',
+      email: '',
+      password: ''
+    });
+
+    setServerErrorMessage('');
+    setDisableSubmitButton(true);
   }, [onClose]);
 
   // RUN VALIDATION WHEN INPUT VALUES CHANGES //
@@ -98,7 +122,7 @@ function SignUpFormPopup({ isOpen, onClose, onFormSwitch, onSubmit, signUpError 
 
   // STORE SERVER ERROR MESSAGES IN STATE VARIABLE //
   useEffect(() => {
-    setSignUpErrorMessage(signUpError);
+    setServerErrorMessage(signUpError);
   }, [signUpError]);
 
   return (
@@ -116,41 +140,51 @@ function SignUpFormPopup({ isOpen, onClose, onFormSwitch, onSubmit, signUpError 
         type="text"
         name="name"
         id="signupform__name"
-        className={`signupform__input ${errorMessages.name ? 'signupform__input-error' : ''}`}
+        className={`signupform__input ${
+          validationErrorMessages.name ? 'signupform__input-error' : ''
+        }`}
         aria-label="name input"
         value={inputValues.name}
         onChange={handleInputChange}
         placeholder="Enter your username"
         autoComplete="off"
       />
-      {errorMessages.name && <span className="signupform__error">{errorMessages.name}</span>}
+      {validationErrorMessages.name && (
+        <span className="signupform__error">{validationErrorMessages.name}</span>
+      )}
       <input
         type="text"
         name="email"
         id="signupform__email"
-        className={`signupform__input ${errorMessages.email ? 'signupform__input-error' : ''}`}
+        className={`signupform__input ${
+          validationErrorMessages.email ? 'signupform__input-error' : ''
+        }`}
         aria-label="email input"
         value={inputValues.email}
         onChange={handleInputChange}
         placeholder="Enter your email"
         autoComplete="off"
       />
-      {errorMessages.email && <span className="signupform__error">{errorMessages.email}</span>}
+      {validationErrorMessages.email && (
+        <span className="signupform__error">{validationErrorMessages.email}</span>
+      )}
       <input
         type="text"
         name="password"
         id="signupform__password"
-        className={`signupform__input ${errorMessages.password ? 'signupform__input-error' : ''}`}
+        className={`signupform__input ${
+          validationErrorMessages.password ? 'signupform__input-error' : ''
+        }`}
         aria-label="password input"
         value={inputValues.password}
         onChange={handleInputChange}
         placeholder="Create a password"
         autoComplete="off"
       />
-      {errorMessages.password && (
-        <span className="signupform__error">{errorMessages.password}</span>
+      {validationErrorMessages.password && (
+        <span className="signupform__error">{validationErrorMessages.password}</span>
       )}
-      {signUpErrorMessage && <span className="signupform__error">{signUpErrorMessage}</span>}
+      {serverErrorMessage && <span className="signupform__error">{serverErrorMessage}</span>}
     </PopupForm>
   );
 }

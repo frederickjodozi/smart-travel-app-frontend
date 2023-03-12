@@ -9,8 +9,12 @@ function LoginFormPopup({ isOpen, onClose, onFormSwitch, onSubmit, logInError })
     password: ''
   });
 
-  const [errorMessages, setErrorMessages] = useState({});
-  const [logInErrorMessage, setLogInErrorMessage] = useState('');
+  const [validationErrorMessages, setValidationErrorMessages] = useState({
+    email: '',
+    password: ''
+  });
+
+  const [serverErrorMessage, setServerErrorMessage] = useState('');
   const [disableSubmitButton, setDisableSubmitButton] = useState(true);
 
   // HANDLE INPUT CHANGE, VALIDATION AND SUBMIT //
@@ -23,7 +27,11 @@ function LoginFormPopup({ isOpen, onClose, onFormSwitch, onSubmit, logInError })
   };
 
   async function handleValidation() {
-    const errors = {};
+    const errors = {
+      email: '',
+      password: ''
+    };
+
     const validator = {
       email: /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
       password: /(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])/
@@ -46,9 +54,9 @@ function LoginFormPopup({ isOpen, onClose, onFormSwitch, onSubmit, logInError })
       errors.password = 'Registered passwords contain no more than 30 characters';
     }
 
-    setErrorMessages(errors);
+    setValidationErrorMessages(errors);
 
-    if (Object.keys(errors).length === 0) {
+    if (Object.values(errors).every((error) => error === '')) {
       setDisableSubmitButton(false);
     }
   }
@@ -60,31 +68,45 @@ function LoginFormPopup({ isOpen, onClose, onFormSwitch, onSubmit, logInError })
       email: '',
       password: ''
     });
+
+    setValidationErrorMessages({
+      email: '',
+      password: ''
+    });
+
+    setServerErrorMessage('');
     setDisableSubmitButton(true);
   };
 
   // RESET INPUT VALUES ON FORM CLOSE //
   useEffect(() => {
     setInputValues({
-      name: '',
       email: '',
       password: ''
     });
 
-    setErrorMessages({});
-    setLogInErrorMessage('');
+    setValidationErrorMessages({
+      email: '',
+      password: ''
+    });
+
+    setServerErrorMessage('');
+    setDisableSubmitButton(true);
   }, [onClose]);
 
   // RUN VALIDATION WHEN INPUT VALUES CHANGES //
   useEffect(() => {
-    if (inputValues.email.length > 0 || inputValues.password.length > 0) {
+    if (
+      inputValues.email.length > 0 ||
+      inputValues.password.length > 0
+    ) {
       handleValidation();
     }
   }, [inputValues]);
 
   // STORE SERVER ERROR MESSAGES IN STATE VARIABLE //
   useEffect(() => {
-    setLogInErrorMessage(logInError);
+    setServerErrorMessage(logInError);
   }, [logInError]);
 
   return (
@@ -102,27 +124,35 @@ function LoginFormPopup({ isOpen, onClose, onFormSwitch, onSubmit, logInError })
         type="text"
         name="email"
         id="email"
-        className={`loginform__input ${errorMessages.email ? 'loginform__input-error' : ''}`}
+        className={`loginform__input ${
+          validationErrorMessages.email ? 'loginform__input-error' : ''
+        }`}
         aria-label="email input"
         value={inputValues.email}
         onChange={handleInputChange}
         placeholder="Enter your email"
         autoComplete="off"
       />
-      {errorMessages.email && <span className="loginform__error">{errorMessages.email}</span>}
+      {validationErrorMessages.email && (
+        <span className="loginform__error">{validationErrorMessages.email}</span>
+      )}
       <input
         type="text"
         name="password"
         id="password"
-        className={`loginform__input ${errorMessages.password ? 'loginform__input-error' : ''}`}
+        className={`loginform__input ${
+          validationErrorMessages.password ? 'loginform__input-error' : ''
+        }`}
         aria-label="password input"
         value={inputValues.password}
         onChange={handleInputChange}
         placeholder="Enter your password"
         autoComplete="off"
       />
-      {errorMessages.password && <span className="loginform__error">{errorMessages.password}</span>}
-      {logInErrorMessage && <span className="loginform__error">{logInErrorMessage}</span>}
+      {validationErrorMessages.password && (
+        <span className="loginform__error">{validationErrorMessages.password}</span>
+      )}
+      {serverErrorMessage && <span className="loginform__error">{serverErrorMessage}</span>}
     </PopupForm>
   );
 }
