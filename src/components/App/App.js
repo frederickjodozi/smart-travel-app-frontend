@@ -42,16 +42,15 @@ function App() {
 
   const [isLoading, setIsLoading] = useState(false);
 
-  // USER CALL ON PAGE LOAD //
+  // TOKEN CHECK ON APP RENDER //
   useEffect(() => {
     const token = localStorage.getItem('jwt');
     if (token) {
       userApi
         .getUserInfo(token)
         .then((returnedUser) => {
-          setCurrentUser(returnedUser);
           setIsLoggedIn(true);
-          navigate('/smart-travel-app-frontend');
+          console.log(returnedUser);
         })
         .catch((err) => {
           console.log(err);
@@ -59,19 +58,29 @@ function App() {
     }
   }, []);
 
-  // LOCATIONS CALL ON PAGE LOAD //
+  // USER INFO CALL ON LOGIN //
+  useEffect(() => {
+    const token = localStorage.getItem('jwt');
+    if (token) {
+      userApi
+        .getUserInfo(token)
+        .then((returnedUser) => {
+          setCurrentUser(returnedUser);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  }, [isLoggedIn]);
+
+  // SAVED LOCATIONS CALL ON LOGIN //
   useEffect(() => {
     const token = localStorage.getItem('jwt');
     if (token) {
       userApi
         .getUserLocations(token)
         .then((returnedLocations) => {
-          if (returnedLocations.length > 0) {
-            setSavedLocations(returnedLocations);
-            navigate('/smart-travel-app-frontend/saved-locations');
-          } else {
-            console.log('User has no saved locations');
-          }
+          setSavedLocations(returnedLocations);
         })
         .catch((err) => {
           console.log(err);
