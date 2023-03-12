@@ -116,6 +116,7 @@ function App() {
       .then((res) => {
         if (res._id) {
           handleClosePopups();
+          navigate('/smart-travel-app-frontend');
           setInfoTooltipStatus('success');
           setInfoTooltipMessage('Registration successful!');
           setIsInfoTooltipOpen(true);
