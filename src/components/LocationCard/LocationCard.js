@@ -2,29 +2,41 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 import './LocationCard.css';
 
-function LocationCard({ location, onCardClick, onCardSave, isLoggedIn }) {
+function LocationCard({ isLoggedIn, location, onCardClick, onCardSave, onCardDelete }) {
   const handleCardClick = () => {
     onCardClick(location);
   };
 
+  const handleCardSave = () => {
+    onCardSave({
+      title: location.name,
+      text: location.wikipedia_extracts.text,
+      image: location.preview.source
+    });
+  };
+
+  const handleCardDelete = () => {
+    onCardDelete(location._id);
+  };
+
   return (
     <li className="location">
-      {/* LOGIC TO BE IMPLEMENTED WITH BACKEND PART OF PROJECT
-      {isLoggedIn && location.xid === user.cards.xid
-        ? (
-          <button
-            className="location__save-button"
-            type="button"
-            onClick={onCardDelete}
-            aria-label="Save Location"
-          />
-        ) : '' }
-      */}
-      {isLoggedIn ? (
+      {/* LOCATION._ID IS USED BY SAVED LOCATIONS AND LOCATION.XID BY API RETURNED LOCATIONS */}
+      {isLoggedIn && location._id ? (
         <button
           className="location__save-button"
           type="button"
-          onClick={onCardSave}
+          onClick={handleCardDelete}
+          aria-label="Delete Location"
+        />
+      ) : (
+        ''
+      )}
+      {isLoggedIn && location.xid ? (
+        <button
+          className="location__save-button"
+          type="button"
+          onClick={handleCardSave}
           aria-label="Save Location"
         />
       ) : (
@@ -32,11 +44,11 @@ function LocationCard({ location, onCardClick, onCardSave, isLoggedIn }) {
       )}
       <img
         className="location__image"
-        src={`${location.preview.source}`}
-        alt={`${location.name}`}
+        src={location._id ? `${location.image}` : `${location.preview.source}`}
+        alt={location._id ? `${location.title}` : `${location.name}`}
         onClick={handleCardClick}
       />
-      <h2 className="location__title">{location.name}</h2>
+      <h2 className="location__title">{location._id ? `${location.title}` : `${location.name}`}</h2>
     </li>
   );
 }

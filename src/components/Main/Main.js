@@ -6,12 +6,12 @@ import Locations from '../Locations/Locations';
 import './Main.css';
 
 function Main({
+  isLoggedIn,
   onQuery,
   locations,
+  savedLocations,
   onCardClick,
   onCardSave,
-  isLoggedIn,
-  savedLocations,
   onCardDelete
 }) {
   return (
@@ -37,10 +37,10 @@ function Main({
               <h2 className="main__subtitle">Location results for your search</h2>
               <span className="main__message">Click cards for more info</span>
               <Locations
+                isLoggedIn={isLoggedIn}
                 locations={locations}
                 onCardClick={onCardClick}
                 onCardSave={onCardSave}
-                isLoggedIn={isLoggedIn}
               />
             </ProtectedRoute>
           }
@@ -51,10 +51,10 @@ function Main({
             <ProtectedRoute routeAuth={isLoggedIn}>
               <h2 className="main__subtitle">Your saved locations</h2>
               <Locations
+                isLoggedIn={isLoggedIn}
                 locations={savedLocations}
                 onCardClick={onCardClick}
                 onCardDelete={onCardDelete}
-                isLoggedIn={isLoggedIn}
               />
             </ProtectedRoute>
           }

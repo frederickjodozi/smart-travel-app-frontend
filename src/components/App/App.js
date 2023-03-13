@@ -184,17 +184,32 @@ function App() {
       });
   };
 
-  const handleCardSave = (location) => {
-    // LOGIN LOGIC TO BE ADDED WITH BACKEND PART OF THE PROJECT //
-    setSavedLocations([...savedLocations, location]);
-    navigate('/smart-travel-app-frontend/saved-locations');
+  const handleCardSave = (locationData) => {
+    const token = localStorage.getItem('jwt');
+    if (token) {
+      userApi
+        .createLocation(locationData, token)
+        .then((savedLocation) => {
+          setSavedLocations([savedLocation, ...savedLocations]);
+          navigate('/smart-travel-app-frontend/saved-locations');
+        })
+        .catch((err) => console.log(err));
+    }
   };
 
-  const handleCardDelete = (locationXid) => {
-    // LOGIN LOGIC TO BE ADDED WITH BACKEND PART OF THE PROJECT //
-    setSavedLocations((savedLocationsArray) =>
-      savedLocationsArray.filter((savedLocation) => savedLocation.xid === locationXid)
-    );
+  const handleCardDelete = (locationId) => {
+    const token = localStorage.getItem('jwt');
+    if (token) {
+      userApi
+        .deleteLocation(locationId, token)
+        .then(() => {
+          setSavedLocations((savedLocationsArray) =>
+            savedLocationsArray.filter((savedLocation) => savedLocation._id !== locationId)
+          );
+          navigate('/smart-travel-app-frontend/saved-locations');
+        })
+        .catch((err) => console.log(err));
+    }
   };
 
   return (
@@ -208,12 +223,12 @@ function App() {
             onLoginClick={handleLoginClick}
           />
           <Main
+            isLoggedIn={isLoggedIn}
             onQuery={handleQuery}
             locations={locations}
+            savedLocations={savedLocations}
             onCardClick={handleCardClick}
             onCardSave={handleCardSave}
-            isLoggedIn={isLoggedIn}
-            savedLocations={savedLocations}
             onCardDelete={handleCardDelete}
           />
         </div>
