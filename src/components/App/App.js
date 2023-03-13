@@ -110,9 +110,9 @@ function App() {
   };
 
   // USER REGISTRATION AND LOGIN HANDLERS //
-  const handleRegistration = ({ email, password, name }) => {
+  const handleRegistration = (userData) => {
     userApi
-      .registerUser({ email, password, name })
+      .registerUser(userData)
       .then((res) => {
         if (res._id) {
           handleClosePopups();
@@ -128,9 +128,9 @@ function App() {
       });
   };
 
-  const handleLogin = ({ email, password }) => {
+  const handleLogin = (userData) => {
     userApi
-      .loginUser({ email, password })
+      .loginUser(userData)
       .then((res) => {
         if (res.token) {
           localStorage.setItem('jwt', res.token);
