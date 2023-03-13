@@ -80,6 +80,10 @@
     margin: 0 2px 0 0;
   }
 
+  .navigation__list {
+    padding: 0 0 0 18px;
+  }
+
   .navigation__link {
     margin: 0 6px;
     font-size: 13px;
