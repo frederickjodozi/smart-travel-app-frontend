@@ -249,7 +249,7 @@ function SearchBar({ onQuery }) {
         </button>
       </form>
       <a
-        href="./#about"
+        href="#about"
         className={`searchbar__link ${errorMessage && 'searchbar__link_type_error'}`}
       >
         <img className="searchbar__arrow" src={downArrow} alt="down arrow link" />
