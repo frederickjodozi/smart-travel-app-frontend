@@ -19,16 +19,7 @@ function SignUpFormPopup({ isOpen, onClose, onFormSwitch, onSubmit, signUpError 
   const [serverErrorMessage, setServerErrorMessage] = useState('');
   const [disableSubmitButton, setDisableSubmitButton] = useState(true);
 
-  // HANDLE INPUT CHANGE, VALIDATION AND SUBMIT //
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setInputValues({
-      ...inputValues,
-      [name]: value
-    });
-  };
-
-  async function handleValidation() {
+  const handleValidation = () => {
     const errors = {
       name: '',
       email: '',
@@ -69,9 +60,27 @@ function SignUpFormPopup({ isOpen, onClose, onFormSwitch, onSubmit, signUpError 
 
     if (Object.values(errors).every((error) => error === '')) {
       setDisableSubmitButton(false);
+    } else {
+      setDisableSubmitButton(true);
     }
-  }
+  };
 
+  // HANDLE INPUT CHANGE AND RUN VALIDATION ON INPUT CHANGE //
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setInputValues({
+      ...inputValues,
+      [name]: value
+    });
+  };
+
+  useEffect(() => {
+    if (Object.values(inputValues).some((inputValue) => inputValue.length > 0)) {
+      handleValidation();
+    }
+  }, [inputValues]);
+
+  // HANDLE SUBMIT AND SHOW SERVER ERROR MESSAGE //
   const handleSubmit = (e) => {
     e.preventDefault();
     onSubmit(inputValues);
@@ -91,6 +100,10 @@ function SignUpFormPopup({ isOpen, onClose, onFormSwitch, onSubmit, signUpError 
     setDisableSubmitButton(true);
   };
 
+  useEffect(() => {
+    setServerErrorMessage(signUpError);
+  }, [signUpError]);
+
   // RESET INPUT VALUES ON FORM CLOSE //
   useEffect(() => {
     setInputValues({
@@ -108,22 +121,6 @@ function SignUpFormPopup({ isOpen, onClose, onFormSwitch, onSubmit, signUpError 
     setServerErrorMessage('');
     setDisableSubmitButton(true);
   }, [onClose]);
-
-  // RUN VALIDATION WHEN INPUT VALUES CHANGES //
-  useEffect(() => {
-    if (
-      inputValues.name.length > 0 ||
-      inputValues.email.length > 0 ||
-      inputValues.password.length > 0
-    ) {
-      handleValidation();
-    }
-  }, [inputValues]);
-
-  // STORE SERVER ERROR MESSAGES IN STATE VARIABLE //
-  useEffect(() => {
-    setServerErrorMessage(signUpError);
-  }, [signUpError]);
 
   return (
     <PopupForm

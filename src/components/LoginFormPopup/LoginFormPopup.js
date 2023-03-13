@@ -17,16 +17,7 @@ function LoginFormPopup({ isOpen, onClose, onFormSwitch, onSubmit, logInError })
   const [serverErrorMessage, setServerErrorMessage] = useState('');
   const [disableSubmitButton, setDisableSubmitButton] = useState(true);
 
-  // HANDLE INPUT CHANGE, VALIDATION AND SUBMIT //
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setInputValues({
-      ...inputValues,
-      [name]: value
-    });
-  };
-
-  async function handleValidation() {
+  const handleValidation = () => {
     const errors = {
       email: '',
       password: ''
@@ -58,8 +49,25 @@ function LoginFormPopup({ isOpen, onClose, onFormSwitch, onSubmit, logInError })
 
     if (Object.values(errors).every((error) => error === '')) {
       setDisableSubmitButton(false);
+    } else {
+      setDisableSubmitButton(true);
     }
-  }
+  };
+
+  // HANDLE INPUT CHANGE AND RUN VALIDATION ON INPUT CHANGE //
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setInputValues({
+      ...inputValues,
+      [name]: value
+    });
+  };
+
+  useEffect(() => {
+    if (Object.values(inputValues).some((inputValue) => inputValue.length > 0)) {
+      handleValidation();
+    }
+  }, [inputValues]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -78,6 +86,10 @@ function LoginFormPopup({ isOpen, onClose, onFormSwitch, onSubmit, logInError })
     setDisableSubmitButton(true);
   };
 
+  useEffect(() => {
+    setServerErrorMessage(logInError);
+  }, [logInError]);
+
   // RESET INPUT VALUES ON FORM CLOSE //
   useEffect(() => {
     setInputValues({
@@ -93,21 +105,6 @@ function LoginFormPopup({ isOpen, onClose, onFormSwitch, onSubmit, logInError })
     setServerErrorMessage('');
     setDisableSubmitButton(true);
   }, [onClose]);
-
-  // RUN VALIDATION WHEN INPUT VALUES CHANGES //
-  useEffect(() => {
-    if (
-      inputValues.email.length > 0 ||
-      inputValues.password.length > 0
-    ) {
-      handleValidation();
-    }
-  }, [inputValues]);
-
-  // STORE SERVER ERROR MESSAGES IN STATE VARIABLE //
-  useEffect(() => {
-    setServerErrorMessage(logInError);
-  }, [logInError]);
 
   return (
     <PopupForm
