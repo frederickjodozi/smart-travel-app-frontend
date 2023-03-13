@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 class UserApi {
   constructor({ baseUrl }) {
     this._baseUrl = baseUrl;
