@@ -10,25 +10,29 @@ class UserApi {
     return res.json();
   }
 
-  registerUser({ email, password, name }) {
+  registerUser(userData) {
     return fetch(`${this._baseUrl}/users/register`, {
       method: 'POST',
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ email, password, name })
+      body: JSON.stringify({
+        email: userData.email,
+        password: userData.password,
+        name: userData.name
+      })
     }).then((res) => this._getResponseData(res));
   }
 
-  loginUser({ email, password }) {
+  loginUser(userData) {
     return fetch(`${this._baseUrl}/users/login`, {
       method: 'POST',
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ email, password })
+      body: JSON.stringify({ email: userData.email, password: userData.password })
     }).then((res) => this._getResponseData(res));
   }
 
@@ -71,14 +75,18 @@ class UserApi {
     }).then((res) => this._getResponseData(res));
   }
 
-  createLocation(title, text, image, token) {
+  createLocation(locationData, token) {
     return fetch(`${this._baseUrl}/locations/mylocations`, {
       method: 'POST',
       headers: {
         authorization: `Bearer ${token}`,
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ title, text, image })
+      body: JSON.stringify({
+        title: locationData.title,
+        text: locationData.text,
+        image: locationData.image
+      })
     }).then((res) => this._getResponseData(res));
   }
 
@@ -89,7 +97,7 @@ class UserApi {
         authorization: `Bearer ${token}`,
         'Content-Type': 'application/json'
       }
-    }).then((res) => this._getResponseData(res));
+    }).then((res) => console.log(res));
   }
 }
 
