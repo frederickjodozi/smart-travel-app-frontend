@@ -50,13 +50,19 @@ function Main({
           path="/smart-travel-app-frontend/saved-locations"
           element={
             <ProtectedRoute routeAuth={isLoggedIn} setIsLoginFormOpen={setIsLoginFormOpen}>
-              <h2 className="main__subtitle">Your saved locations</h2>
-              <Locations
-                isLoggedIn={isLoggedIn}
-                locations={savedLocations}
-                onCardClick={onCardClick}
-                onCardDelete={onCardDelete}
-              />
+              {savedLocations.length === 0 ? (
+                <h2 className="main__subtitle main__subtitle_nolocations">No saved locations to show</h2>
+              ) : (
+                <>
+                  <h2 className="main__subtitle">Your saved locations</h2>
+                  <Locations
+                    isLoggedIn={isLoggedIn}
+                    locations={savedLocations}
+                    onCardClick={onCardClick}
+                    onCardDelete={onCardDelete}
+                  />
+                </>
+              )}
             </ProtectedRoute>
           }
         />
