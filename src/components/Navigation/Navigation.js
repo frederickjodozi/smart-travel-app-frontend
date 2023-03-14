@@ -17,7 +17,7 @@ function Navigation({ isLoggedIn, onLogout, onSignUpClick, onLoginClick }) {
           <li className="navigation__item">
             <img src={articlesIcon} className="navigation__icon" alt="saved articles icon" />
             <Link to="/smart-travel-app-frontend/saved-locations" className="navigation__link" aria-label="saved articles">
-              Saved Articles
+              Saved Locations
             </Link>
           </li>
           <li className="navigation__item">
