@@ -1,9 +1,10 @@
 import { Navigate } from 'react-router-dom';
 
-function ProtectedRoute({ routeAuth, children }) {
-  if (routeAuth === true || routeAuth.length > 0) {
+function ProtectedRoute({ routeAuth, children, setIsLoginFormOpen }) {
+  if (routeAuth === true) {
     return children;
   }
+  setIsLoginFormOpen(true);
   return <Navigate to="/smart-travel-app-frontend/" />;
 }
 

@@ -12,7 +12,8 @@ function Main({
   savedLocations,
   onCardClick,
   onCardSave,
-  onCardDelete
+  onCardDelete,
+  setIsLoginFormOpen
 }) {
   return (
     <main className="main">
@@ -33,7 +34,7 @@ function Main({
         <Route
           path="/smart-travel-app-frontend/locations"
           element={
-            <ProtectedRoute routeAuth={locations}>
+            <ProtectedRoute routeAuth={isLoggedIn} setIsLoginFormOpen={setIsLoginFormOpen}>
               <h2 className="main__subtitle">Location results for your search</h2>
               <span className="main__message">Click cards for more info</span>
               <Locations
@@ -48,7 +49,7 @@ function Main({
         <Route
           path="/smart-travel-app-frontend/saved-locations"
           element={
-            <ProtectedRoute routeAuth={isLoggedIn}>
+            <ProtectedRoute routeAuth={isLoggedIn} setIsLoginFormOpen={setIsLoginFormOpen}>
               <h2 className="main__subtitle">Your saved locations</h2>
               <Locations
                 isLoggedIn={isLoggedIn}

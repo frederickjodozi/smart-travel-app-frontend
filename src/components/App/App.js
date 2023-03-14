@@ -230,6 +230,7 @@ function App() {
             onCardClick={handleCardClick}
             onCardSave={handleCardSave}
             onCardDelete={handleCardDelete}
+            setIsLoginFormOpen={setIsLoginFormOpen}
           />
         </div>
         <Footer />
