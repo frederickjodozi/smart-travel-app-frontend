@@ -5,6 +5,7 @@ import './LocationCard.css';
 
 function LocationCard({ isLoggedIn, location, onCardClick, onCardSave, onCardDelete }) {
   const [cardSaved, setCardSaved] = useState(false);
+  const [savedCardId, setSavedCardId] = useState('');
 
   const handleCardClick = () => {
     onCardClick(location);
@@ -16,8 +17,13 @@ function LocationCard({ isLoggedIn, location, onCardClick, onCardSave, onCardDel
         title: location.name,
         text: location.wikipedia_extracts.text,
         image: location.preview.source
+      }).then((savedLocation) => {
+        setCardSaved(true);
+        setSavedCardId(savedLocation._id);
       });
-      setCardSaved(true);
+    } else {
+      onCardDelete(savedCardId);
+      setCardSaved(false);
     }
   };
 

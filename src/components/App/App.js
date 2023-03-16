@@ -1,5 +1,6 @@
-/* eslint-disable no-undef */
 /* eslint-disable no-console */
+/* eslint-disable no-undef */
+/* eslint-disable consistent-return */
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import UserContext from '../../contexts/CurrentUserContext';
@@ -187,11 +188,11 @@ function App() {
   const handleCardSave = (locationData) => {
     const token = localStorage.getItem('jwt');
     if (token) {
-      userApi
+      return userApi
         .createLocation(locationData, token)
         .then((savedLocation) => {
           setSavedLocations([savedLocation, ...savedLocations]);
-          navigate('/smart-travel-app-frontend/saved-locations');
+          return savedLocation;
         })
         .catch((err) => console.log(err));
     }
@@ -206,7 +207,6 @@ function App() {
           setSavedLocations((savedLocationsArray) =>
             savedLocationsArray.filter((savedLocation) => savedLocation._id !== locationId)
           );
-          navigate('/smart-travel-app-frontend/saved-locations');
         })
         .catch((err) => console.log(err));
     }

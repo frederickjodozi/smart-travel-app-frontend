@@ -40,6 +40,7 @@ function Locations({
                   location={location}
                   onCardClick={onCardClick}
                   onCardSave={onCardSave}
+                  onCardDelete={onCardDelete}
                 />
               ))}
       </ul>

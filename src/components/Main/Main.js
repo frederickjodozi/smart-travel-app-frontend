@@ -42,6 +42,7 @@ function Main({
                 locations={locations}
                 onCardClick={onCardClick}
                 onCardSave={onCardSave}
+                onCardDelete={onCardDelete}
               />
             </ProtectedRoute>
           }
