@@ -98,7 +98,7 @@ class UserApi {
         authorization: `Bearer ${token}`,
         'Content-Type': 'application/json'
       }
-    }).then((res) => console.log(res));
+    }).then((res) => this._getResponseData(res));
   }
 }
 
