@@ -27,6 +27,10 @@ function App() {
   // UI RENDERED LOCATIONS STATES //
   const [locations, setLocations] = useState([]);
   const [savedLocations, setSavedLocations] = useState([]);
+  const [locationToolTip, setLocationToolTip] = useState({
+    locationName: '',
+    locationHandler: ''
+  });
 
   // POPUP STATES //
   const [isSignUpFormOpen, setIsSignUpFormOpen] = useState(false);
@@ -89,7 +93,7 @@ function App() {
     }
   }, [isLoggedIn]);
 
-  // OPEN POPUP HANDLERS //
+  // OPEN AND CLOSE POPUP HANDLERS //
   const handleSignUpClick = () => {
     setIsSignUpFormOpen(true);
   };
@@ -102,12 +106,18 @@ function App() {
     setSelectedLocation(location);
   };
 
-  // CLOSE POPUP HANDLER //
   const handleClosePopups = () => {
     setIsSignUpFormOpen(false);
     setIsLoginFormOpen(false);
     setSelectedLocation(null);
     setIsInfoTooltipOpen(false);
+  };
+
+  const handleSavedLocationsClick = () => {
+    setLocationToolTip({
+      locationName: '',
+      locationHandler: ''
+    });
   };
 
   // USER REGISTRATION AND LOGIN HANDLERS //
@@ -161,6 +171,10 @@ function App() {
         if (locationsArray.length > 0) {
           localStorage.setItem('locations', JSON.stringify(locationsArray));
           setLocations(locationsArray);
+          setLocationToolTip({
+            locationName: '',
+            locationHandler: ''
+          });
           setIsLoading(false);
           navigate('/smart-travel-app-frontend/locations');
         } else {
@@ -192,6 +206,10 @@ function App() {
         .createLocation(locationData, token)
         .then((savedLocation) => {
           setSavedLocations([savedLocation, ...savedLocations]);
+          setLocationToolTip({
+            locationName: savedLocation.title,
+            locationHandler: 'saved'
+          });
           return savedLocation;
         })
         .catch((err) => console.log(err));
@@ -203,10 +221,14 @@ function App() {
     if (token) {
       userApi
         .deleteLocation(locationId, token)
-        .then(() => {
+        .then((deletedLocation) => {
           setSavedLocations((savedLocationsArray) =>
             savedLocationsArray.filter((savedLocation) => savedLocation._id !== locationId)
           );
+          setLocationToolTip({
+            locationName: deletedLocation.title,
+            locationHandler: 'deleted'
+          });
         })
         .catch((err) => console.log(err));
     }
@@ -221,6 +243,7 @@ function App() {
             onLogout={handleLogout}
             onSignUpClick={handleSignUpClick}
             onLoginClick={handleLoginClick}
+            onSavedLocationsClick={handleSavedLocationsClick}
           />
           <Main
             isLoggedIn={isLoggedIn}
@@ -230,6 +253,7 @@ function App() {
             onCardClick={handleCardClick}
             onCardSave={handleCardSave}
             onCardDelete={handleCardDelete}
+            locationToolTip={locationToolTip}
             setIsLoginFormOpen={setIsLoginFormOpen}
           />
         </div>

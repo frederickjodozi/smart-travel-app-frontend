@@ -4,7 +4,7 @@ import './Header.css';
 import '../../blocks/wrapper/wrapper.css';
 import logo from '../../images/logo.svg';
 
-function Header({ isLoggedIn, onLogout, onSignUpClick, onLoginClick }) {
+function Header({ isLoggedIn, onLogout, onSignUpClick, onLoginClick, onSavedLocationsClick }) {
   return (
     <header className="header wrapper_type_small">
       <Link to="/smart-travel-app-frontend">
@@ -15,6 +15,7 @@ function Header({ isLoggedIn, onLogout, onSignUpClick, onLoginClick }) {
         onLogout={onLogout}
         onSignUpClick={onSignUpClick}
         onLoginClick={onLoginClick}
+        onSavedLocationsClick={onSavedLocationsClick}
       />
     </header>
   );

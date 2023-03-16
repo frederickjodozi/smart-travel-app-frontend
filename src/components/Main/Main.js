@@ -13,6 +13,7 @@ function Main({
   onCardClick,
   onCardSave,
   onCardDelete,
+  locationToolTip,
   setIsLoginFormOpen
 }) {
   return (
@@ -35,6 +36,11 @@ function Main({
           path="/smart-travel-app-frontend/locations"
           element={
             <ProtectedRoute routeAuth={isLoggedIn} setIsLoginFormOpen={setIsLoginFormOpen}>
+              <span className="main__localtiontooltip">
+                {locationToolTip.locationName.length > 0
+                  ? `Location "${locationToolTip.locationName}" has been ${locationToolTip.locationHandler}!`
+                  : ''}
+              </span>
               <h2 className="main__subtitle">Location results for your search</h2>
               <span className="main__message">Click cards for more info</span>
               <Locations
@@ -52,9 +58,16 @@ function Main({
           element={
             <ProtectedRoute routeAuth={isLoggedIn} setIsLoginFormOpen={setIsLoginFormOpen}>
               {savedLocations.length === 0 ? (
-                <h2 className="main__subtitle main__subtitle_nolocations">No saved locations to show</h2>
+                <h2 className="main__subtitle main__subtitle_nolocations">
+                  No saved locations to show
+                </h2>
               ) : (
                 <>
+                  <span>
+                    {locationToolTip.locationName.length > 0
+                      ? `Location "${locationToolTip.locationName}" has been ${locationToolTip.locationHandler}!`
+                      : ''}
+                  </span>
                   <h2 className="main__subtitle">Your saved locations</h2>
                   <Locations
                     isLoggedIn={isLoggedIn}
