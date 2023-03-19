@@ -9,14 +9,66 @@ function LoginFormPopup({ isOpen, onClose, onFormSwitch, onSubmit, logInError })
     password: ''
   });
 
-  const [validationErrorMessages, setValidationErrorMessages] = useState({
+  const [validationErrors, setValidationErrors] = useState({
     email: '',
     password: ''
   });
 
-  const [serverErrorMessage, setServerErrorMessage] = useState('');
+  const [showValidationErrors, setShowValidationErrors] = useState({
+    email: false,
+    password: false
+  });
+
+  const [serverError, setServerError] = useState('');
   const [disableSubmitButton, setDisableSubmitButton] = useState(true);
 
+  // HANDLE INPUT CHANGE, HANDLE FOCUSED INPUT AND HANDLE BLURRED INPUT //
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setInputValues({
+      ...inputValues,
+      [name]: value
+    });
+  };
+
+  const handleInputFocus = (e) => {
+    const { name } = e.target;
+
+    const unfocusedInputs = Object.fromEntries(
+      Object.entries(inputValues).filter(([key]) => key !== name)
+    );
+    const unfocusedValidationErrors = Object.fromEntries(
+      Object.entries(validationErrors).filter(([key]) => key !== name)
+    );
+
+    /* SHOW VALIDATION ERROR FOR LAST FIELD TO BE FILLED:
+    HELP USER UNDERSTAND WHY THE VALIDATION BUTTON IS STILL DISABLED */
+    if (
+      Object.values(unfocusedInputs).every((unfocusedInput) => unfocusedInput.length > 0) &&
+      Object.values(unfocusedValidationErrors).every(
+        (unfocusedValidationError) => unfocusedValidationError.length < 1
+      )
+    ) {
+      setShowValidationErrors({
+        ...showValidationErrors,
+        [name]: true
+      });
+    }
+  };
+
+  const handleInputBlur = (e) => {
+    const { name } = e.target;
+
+    if (inputValues[name].length === 0) {
+      return;
+    }
+    setShowValidationErrors({
+      ...showValidationErrors,
+      [name]: true
+    });
+  };
+
+  // HANDLE VALIDATION AND RUN VALIDATION ON INPUT CHANGE //
   const handleValidation = () => {
     const errors = {
       email: '',
@@ -45,22 +97,12 @@ function LoginFormPopup({ isOpen, onClose, onFormSwitch, onSubmit, logInError })
       errors.password = 'Registered passwords contain no more than 30 characters';
     }
 
-    setValidationErrorMessages(errors);
-
+    setValidationErrors(errors);
     if (Object.values(errors).every((error) => error === '')) {
       setDisableSubmitButton(false);
     } else {
       setDisableSubmitButton(true);
     }
-  };
-
-  // HANDLE INPUT CHANGE AND RUN VALIDATION ON INPUT CHANGE //
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setInputValues({
-      ...inputValues,
-      [name]: value
-    });
   };
 
   useEffect(() => {
@@ -69,6 +111,7 @@ function LoginFormPopup({ isOpen, onClose, onFormSwitch, onSubmit, logInError })
     }
   }, [inputValues]);
 
+  // HANDLE SUBMIT AND RESET INPUT VALUES ON FORM CLOSE //
   const handleSubmit = (e) => {
     e.preventDefault();
     onSubmit(inputValues);
@@ -77,32 +120,41 @@ function LoginFormPopup({ isOpen, onClose, onFormSwitch, onSubmit, logInError })
       password: ''
     });
 
-    setValidationErrorMessages({
+    setValidationErrors({
       email: '',
       password: ''
     });
 
-    setServerErrorMessage('');
+    setShowValidationErrors({
+      email: false,
+      password: false
+    });
+
+    setServerError('');
     setDisableSubmitButton(true);
   };
 
   useEffect(() => {
-    setServerErrorMessage(logInError);
+    setServerError(logInError);
   }, [logInError]);
 
-  // RESET INPUT VALUES ON FORM CLOSE //
   useEffect(() => {
     setInputValues({
       email: '',
       password: ''
     });
 
-    setValidationErrorMessages({
+    setValidationErrors({
       email: '',
       password: ''
     });
 
-    setServerErrorMessage('');
+    setShowValidationErrors({
+      email: false,
+      password: false
+    });
+
+    setServerError('');
     setDisableSubmitButton(true);
   }, [onClose]);
 
@@ -122,34 +174,40 @@ function LoginFormPopup({ isOpen, onClose, onFormSwitch, onSubmit, logInError })
         name="email"
         id="email"
         className={`loginform__input ${
-          validationErrorMessages.email ? 'loginform__input-error' : ''
+          showValidationErrors.email && validationErrors.email ? 'loginform__input-error' : ''
         }`}
         aria-label="email input"
         value={inputValues.email}
         onChange={handleInputChange}
+        onFocus={handleInputFocus}
+        onBlur={handleInputBlur}
         placeholder="Enter your email"
         autoComplete="off"
       />
-      {validationErrorMessages.email && (
-        <span className="loginform__error">{validationErrorMessages.email}</span>
-      )}
+      <span className="loginform__error">
+        {showValidationErrors.email ? validationErrors.email : ''}
+      </span>
       <input
         type="text"
         name="password"
         id="password"
         className={`loginform__input ${
-          validationErrorMessages.password ? 'loginform__input-error' : ''
+          showValidationErrors.password && validationErrors.password ? 'loginform__input-error' : ''
         }`}
         aria-label="password input"
         value={inputValues.password}
         onChange={handleInputChange}
+        onFocus={handleInputFocus}
+        onBlur={handleInputBlur}
         placeholder="Enter your password"
         autoComplete="off"
       />
-      {validationErrorMessages.password && (
-        <span className="loginform__error">{validationErrorMessages.password}</span>
-      )}
-      {serverErrorMessage && <span className="loginform__error">{serverErrorMessage}</span>}
+      <span className="loginform__error">
+        {showValidationErrors.password && inputValues.password.length > 0
+          ? validationErrors.password
+          : ''}
+      </span>
+      {serverError && <span className="loginform__error">{serverError}</span>}
     </PopupForm>
   );
 }
