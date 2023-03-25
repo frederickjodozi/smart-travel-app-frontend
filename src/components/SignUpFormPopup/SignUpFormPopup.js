@@ -192,9 +192,7 @@ function SignUpFormPopup({ isOpen, onClose, onFormSwitch, onSubmit, signUpError 
         type="text"
         name="name"
         id="signupform__name"
-        className={`signupform__input ${
-          showValidationErrors && validationErrors.name ? 'signupform__input-error' : ''
-        }`}
+        className="signupform__input"
         aria-label="name input"
         value={inputValues.name}
         onChange={handleInputChange}
@@ -204,15 +202,13 @@ function SignUpFormPopup({ isOpen, onClose, onFormSwitch, onSubmit, signUpError 
         autoComplete="off"
       />
       <span className="signupform__error">
-        {showValidationErrors.name ? validationErrors.name : ''}
+        {showValidationErrors.name && inputValues.name.length > 0 ? validationErrors.name : ''}
       </span>
       <input
         type="text"
         name="email"
         id="signupform__email"
-        className={`signupform__input ${
-          showValidationErrors.email && validationErrors.email ? 'signupform__input-error' : ''
-        }`}
+        className="signupform__input"
         aria-label="email input"
         value={inputValues.email}
         onChange={handleInputChange}
@@ -222,17 +218,13 @@ function SignUpFormPopup({ isOpen, onClose, onFormSwitch, onSubmit, signUpError 
         autoComplete="off"
       />
       <span className="signupform__error">
-        {showValidationErrors.email ? validationErrors.email : ''}
+        {showValidationErrors.email && inputValues.email.length > 0 ? validationErrors.email : ''}
       </span>
       <input
         type="text"
         name="password"
         id="signupform__password"
-        className={`signupform__input ${
-          showValidationErrors.password && validationErrors.password
-            ? 'signupform__input-error'
-            : ''
-        }`}
+        className="signupform__input"
         aria-label="password input"
         value={inputValues.password}
         onChange={handleInputChange}
@@ -242,7 +234,7 @@ function SignUpFormPopup({ isOpen, onClose, onFormSwitch, onSubmit, signUpError 
         autoComplete="off"
       />
       <span className="signupform__error">
-        {showValidationErrors.password ? validationErrors.password : ''}
+        {showValidationErrors.password && inputValues.password.length > 0 ? validationErrors.password : ''}
       </span>
       {serverError && <span className="signupform__error">{serverError}</span>}
     </PopupForm>

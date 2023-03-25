@@ -3,6 +3,7 @@ import PopupForm from '../PopupForm/PopupForm';
 import './LoginFormPopup.css';
 
 function LoginFormPopup({ isOpen, onClose, onFormSwitch, onSubmit, logInError }) {
+  // KEEP THE INPUT ERROR ALWAYS ON WITH A HEIGHT: DISPLAY FLEX, JUSTIFY CENTER AND THE MESSAGE APPEARS ON ERROR //
   // STATE VARIABLES //
   const [inputValues, setInputValues] = useState({
     email: '',
@@ -173,9 +174,7 @@ function LoginFormPopup({ isOpen, onClose, onFormSwitch, onSubmit, logInError })
         type="text"
         name="email"
         id="email"
-        className={`loginform__input ${
-          showValidationErrors.email && validationErrors.email ? 'loginform__input-error' : ''
-        }`}
+        className="loginform__input"
         aria-label="email input"
         value={inputValues.email}
         onChange={handleInputChange}
@@ -185,15 +184,13 @@ function LoginFormPopup({ isOpen, onClose, onFormSwitch, onSubmit, logInError })
         autoComplete="off"
       />
       <span className="loginform__error">
-        {showValidationErrors.email ? validationErrors.email : ''}
+        {showValidationErrors.email && inputValues.email.length > 0 ? validationErrors.email : ''}
       </span>
       <input
         type="text"
         name="password"
         id="password"
-        className={`loginform__input ${
-          showValidationErrors.password && validationErrors.password ? 'loginform__input-error' : ''
-        }`}
+        className="loginform__input"
         aria-label="password input"
         value={inputValues.password}
         onChange={handleInputChange}
@@ -203,9 +200,7 @@ function LoginFormPopup({ isOpen, onClose, onFormSwitch, onSubmit, logInError })
         autoComplete="off"
       />
       <span className="loginform__error">
-        {showValidationErrors.password && inputValues.password.length > 0
-          ? validationErrors.password
-          : ''}
+        {showValidationErrors.password && inputValues.password.length > 0 ? validationErrors.password : ''}
       </span>
       {serverError && <span className="loginform__error">{serverError}</span>}
     </PopupForm>

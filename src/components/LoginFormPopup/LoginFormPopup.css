@@ -1,7 +1,6 @@
 .loginform__input {
   width: 100%;
   height: 60px;
-  margin: 0 0 42px 0;
   padding: 0 24px;
   box-sizing: border-box;
   border: 1px solid #000000;
@@ -10,12 +9,9 @@
   color: #000000;
 }
 
-.loginform__input-error {
-  margin: 0;
-}
-
 .loginform__error {
   color: #FF0000;
+  min-height: 18px;
   padding: 12px 24px;
   font-family: 'Inter', sans-serif;
   font-style: normal;
@@ -35,53 +31,41 @@
 @media (max-width: 768px) {
   .loginform__input {
     height: 55px;
-    margin: 0 0 30px 0;
     padding: 0 20px;
     font-size: 14px;
     line-height: 16px;
   }
 
   .loginform__error {
+    min-height: 16px;
     padding: 8px 20px;
     font-size: 12px;
     line-height: 14px;
-  }
-
-  .loginform__input-error {
-    margin: 0;
   }
 }
 
 @media (max-width: 480px) {
   .loginform__input {
     height: 50px;
-    margin: 0 0 26px 0;
     padding: 0 16px;
   }
 
   .loginform__error {
+    min-height: 15px;
     padding: 6px 16px;
-  }
-
-  .loginform__input-error {
-    margin: 0;
   }
 }
 
 @media (max-width: 320px) {
   .loginform__input {
     height: 45px;
-    margin: 0 0 22px 0;
     font-size: 11px;
   }
 
   .loginform__error {
+    min-height: 14px;
     padding: 4px 16px;
     font-size: 12px;
     line-height: 14px;
-  }
-
-  .loginform__input-error {
-    margin: 0;
   }
 }
