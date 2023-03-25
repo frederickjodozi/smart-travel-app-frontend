@@ -138,14 +138,34 @@
   display: none;
 }
 
-.searchbar__error {
+.searchbar__error-container {
+  display: flex;
+  align-items: center;
+  padding: 8px 0 8px 32px;
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0.5s linear, opacity 1s ease-in-out;
+}
+
+.searchbar__error-container_show {
+  visibility: visible;
+  opacity: 1;
+}
+
+.searchbar__error-logo {
+  width: 30px;
+  height: 30px;
+  margin: 0 10px 0 0;
+}
+
+.searchbar__error-message {
   color: #ff0000;
-  padding: 8px 32px;
   font-family: 'Inter', sans-serif;
   font-style: normal;
-  font-weight: 400;
+  font-weight: 600;
   font-size: 14px;
   line-height: 18px;
+  text-decoration: underline;
 }
 
 .searchbar__submit-button {
@@ -231,7 +251,7 @@
     padding: 14px 8px 0;
   }
 
-  .searchbar__error {
+  .searchbar__error-message {
     font-size: 12px;
     line-height: 14px;
   }
@@ -284,8 +304,18 @@
     padding: 10px 4px 0;
   }
 
-  .searchbar__error {
-    padding: 6px 20px;
+  .searchbar__error-container {
+    padding: 6px 0 6px 16px;
+  }
+
+  .searchbar__error-logo {
+    width: 25px;
+    height: 25px;
+    margin: 0 8px 0 0;
+  }
+
+  .searchbar__error-message {
+    font-weight: 500;
   }
 
   .searchbar__submit-button {
@@ -340,10 +370,13 @@
     margin: 8px auto 0;
   }
 
-  .searchbar__error {
-    padding: 4px 16px;
-    font-size: 12px;
-    line-height: 14px;
+  .searchbar__error-container {
+    padding: 4px 0 4px 16px;
+  }
+
+  .searchbar__error-logo {
+    width: 20px;
+    height: 20px;
   }
 
   .searchbar__submit-button {

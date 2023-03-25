@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import './Searchbar.css';
 import smallTriangle from '../../images/smallTriangle.svg';
 import smallTriangleSelected from '../../images/smallTriangleSelected.svg';
+import errorLogo from '../../images/error-icon.svg';
 import singleDownArrow from '../../images/singleDownArrow.svg';
 import downArrow from '../../images/downArrow.png';
 
@@ -242,7 +243,14 @@ function SearchBar({ onQuery }) {
               </li>
             </ul>
           )}
-          {errorMessage && <span className="searchbar__error">{errorMessage}</span>}
+          <div
+            className={`searchbar__error-container ${
+              errorMessage ? 'searchbar__error-container_show' : ''
+            }`}
+          >
+            <img src={errorLogo} className="searchbar__error-logo" alt="error" />
+            <span className="searchbar__error-message">{errorMessage}</span>
+          </div>
         </div>
         <button type="submit" className="searchbar__submit-button" aria-label="submit">
           Go!
