@@ -3,7 +3,6 @@ import PopupForm from '../PopupForm/PopupForm';
 import './LoginFormPopup.css';
 
 function LoginFormPopup({ isOpen, onClose, onFormSwitch, onSubmit, logInError }) {
-  // KEEP THE INPUT ERROR ALWAYS ON WITH A HEIGHT: DISPLAY FLEX, JUSTIFY CENTER AND THE MESSAGE APPEARS ON ERROR //
   // STATE VARIABLES //
   const [inputValues, setInputValues] = useState({
     email: '',
