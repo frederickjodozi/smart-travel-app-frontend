@@ -13,6 +13,19 @@ function SearchBar({ onQuery }) {
   const [query, setQuery] = useState('');
   const [queryType, setQueryType] = useState('interesting_places');
   const [validationError, setValidationError] = useState('');
+  const [showValidationError, setShowValidationError] = useState(false);
+
+  const handleInputFocus = () => {
+    setShowValidationError(false);
+  };
+
+  const handleInputBlur = () => {
+    setShowValidationError(true);
+  };
+
+  useEffect(() => {
+    console.log(showValidationError);
+  }, [showValidationError])
 
   // QUERY TYPE LIST STATE AND CLICK HANDLER //
   const [isQueryListOpen, setIsQueryListOpen] = useState(false);
@@ -86,6 +99,8 @@ function SearchBar({ onQuery }) {
             aria-label="query"
             value={query}
             onChange={handleQueryChange}
+            onFocus={handleInputFocus}
+            onBlur={handleInputBlur}
             placeholder="Enter a location.."
             autoComplete="off"
           />
@@ -243,7 +258,7 @@ function SearchBar({ onQuery }) {
           )}
           <div
             className={`searchbar__error-container ${
-              validationError ? 'searchbar__error-container_show' : ''
+              validationError && showValidationError ? 'searchbar__error-container_show' : ''
             }`}
           >
             <img src={errorLogo} className="searchbar__error-logo" alt="error" />
@@ -256,7 +271,9 @@ function SearchBar({ onQuery }) {
       </form>
       <a
         href="#about"
-        className={`searchbar__link ${validationError && 'searchbar__link_type_error'}`}
+        className={`searchbar__link ${
+          validationError && showValidationError ? 'searchbar__link_type_error' : ''
+        }`}
       >
         <img className="searchbar__arrow" src={downArrow} alt="down arrow link" />
       </a>

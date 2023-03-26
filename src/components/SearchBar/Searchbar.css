@@ -144,7 +144,7 @@
   padding: 8px 0 8px 32px;
   visibility: hidden;
   opacity: 0;
-  transition: visibility 0.5s linear, opacity 1s ease-in-out;
+  transition: visibility 0.5s linear, opacity 1s linear;
 }
 
 .searchbar__error-container_show {
