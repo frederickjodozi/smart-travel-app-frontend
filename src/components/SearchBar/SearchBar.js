@@ -267,12 +267,7 @@ function SearchBar({ onQuery }) {
           Go!
         </button>
       </form>
-      <a
-        href="#about"
-        className={`searchbar__link ${
-          validationError && showValidationError ? 'searchbar__link_type_error' : ''
-        }`}
-      >
+      <a href="#about" className="searchbar__link">
         <img className="searchbar__arrow" src={downArrow} alt="down arrow link" />
       </a>
     </section>
