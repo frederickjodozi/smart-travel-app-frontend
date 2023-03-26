@@ -12,9 +12,9 @@ function SearchBar({ onQuery }) {
   // QUERY STATES //
   const [query, setQuery] = useState('');
   const [queryType, setQueryType] = useState('interesting_places');
-  const [errorMessage, setErrorMessage] = useState('');
+  const [validationError, setValidationError] = useState('');
 
-  // QUERY TYPE LIST DROPDOWN STATE AND EFFECT //
+  // QUERY TYPE LIST STATE AND CLICK HANDLER //
   const [isQueryListOpen, setIsQueryListOpen] = useState(false);
 
   useEffect(() => {
@@ -33,6 +33,10 @@ function SearchBar({ onQuery }) {
     };
   }, [isQueryListOpen]);
 
+  const handleQueryListClick = () => {
+    setIsQueryListOpen(!isQueryListOpen);
+  };
+
   // QUERY CHANGE HANDLERS //
   const handleQueryChange = (e) => {
     setQuery(e.target.value);
@@ -43,12 +47,7 @@ function SearchBar({ onQuery }) {
     setIsQueryListOpen(false);
   };
 
-  // QUERY TYPE BUTTON CLICK HANDLER //
-  const handleQueryListClick = () => {
-    setIsQueryListOpen(!isQueryListOpen);
-  };
-
-  // VALIDATION HANDLER //
+  // VALIDATION AND SUBMIT HANDLERS //
   async function handleValidation() {
     let error = '';
 
@@ -63,7 +62,6 @@ function SearchBar({ onQuery }) {
     return error;
   }
 
-  // SUBMIT HANDLER //
   const handleSubmit = (e) => {
     e.preventDefault();
     handleValidation().then((error) => {
@@ -72,7 +70,7 @@ function SearchBar({ onQuery }) {
         setQuery('');
         setQueryType('interesting_places');
       } else {
-        setErrorMessage(error);
+        setValidationError(error);
       }
     });
   };
@@ -245,11 +243,11 @@ function SearchBar({ onQuery }) {
           )}
           <div
             className={`searchbar__error-container ${
-              errorMessage ? 'searchbar__error-container_show' : ''
+              validationError ? 'searchbar__error-container_show' : ''
             }`}
           >
             <img src={errorLogo} className="searchbar__error-logo" alt="error" />
-            <span className="searchbar__error-message">{errorMessage}</span>
+            <span className="searchbar__error-message">{validationError}</span>
           </div>
         </div>
         <button type="submit" className="searchbar__submit-button" aria-label="submit">
@@ -258,7 +256,7 @@ function SearchBar({ onQuery }) {
       </form>
       <a
         href="#about"
-        className={`searchbar__link ${errorMessage && 'searchbar__link_type_error'}`}
+        className={`searchbar__link ${validationError && 'searchbar__link_type_error'}`}
       >
         <img className="searchbar__arrow" src={downArrow} alt="down arrow link" />
       </a>
