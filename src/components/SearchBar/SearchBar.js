@@ -12,20 +12,9 @@ function SearchBar({ onQuery }) {
   // QUERY STATES //
   const [query, setQuery] = useState('');
   const [queryType, setQueryType] = useState('interesting_places');
+
   const [validationError, setValidationError] = useState('');
   const [showValidationError, setShowValidationError] = useState(false);
-
-  const handleInputFocus = () => {
-    setShowValidationError(false);
-  };
-
-  const handleInputBlur = () => {
-    setShowValidationError(true);
-  };
-
-  useEffect(() => {
-    console.log(showValidationError);
-  }, [showValidationError])
 
   // QUERY TYPE LIST STATE AND CLICK HANDLER //
   const [isQueryListOpen, setIsQueryListOpen] = useState(false);
@@ -50,7 +39,7 @@ function SearchBar({ onQuery }) {
     setIsQueryListOpen(!isQueryListOpen);
   };
 
-  // QUERY CHANGE HANDLERS //
+  // QUERY CHANGE, FOCUS AND BLUR HANDLERS //
   const handleQueryChange = (e) => {
     setQuery(e.target.value);
   };
@@ -58,6 +47,15 @@ function SearchBar({ onQuery }) {
   const handleQueryTypeChange = (e) => {
     setQueryType(e.target.value);
     setIsQueryListOpen(false);
+  };
+
+  const handleInputFocus = () => {
+    setShowValidationError(false);
+    setValidationError('');
+  };
+
+  const handleInputBlur = () => {
+    setShowValidationError(true);
   };
 
   // VALIDATION AND SUBMIT HANDLERS //
