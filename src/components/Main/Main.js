@@ -35,7 +35,7 @@ function Main({
         <Route
           path="/smart-travel-app-frontend/locations"
           element={
-            <ProtectedRoute routeAuth={isLoggedIn} setIsLoginFormOpen={setIsLoginFormOpen}>
+            <>
               <span className="main__localtiontooltip">
                 {locationToolTip.locationName.length > 0
                   ? `Location "${locationToolTip.locationName}" has been ${locationToolTip.locationHandler}!`
@@ -50,7 +50,7 @@ function Main({
                 onCardSave={onCardSave}
                 onCardDelete={onCardDelete}
               />
-            </ProtectedRoute>
+            </>
           }
         />
         <Route
