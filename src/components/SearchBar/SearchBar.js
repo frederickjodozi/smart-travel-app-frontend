@@ -14,7 +14,7 @@ function SearchBar({ onQuery }) {
   const [queryType, setQueryType] = useState('interesting_places');
 
   const [validationError, setValidationError] = useState('');
-  const [showValidationError, setShowValidationError] = useState(false);
+  const [showValidationError, setShowValidationError] = useState(true);
 
   // QUERY TYPE LIST STATE AND CLICK HANDLER //
   const [isQueryListOpen, setIsQueryListOpen] = useState(false);
