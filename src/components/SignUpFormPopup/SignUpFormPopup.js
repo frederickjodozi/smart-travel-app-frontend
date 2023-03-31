@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import PopupForm from '../PopupForm/PopupForm';
 import './SignUpFormPopup.css';
 
-function SignUpFormPopup({ isOpen, onClose, onFormSwitch, onSubmit, signUpError }) {
+function SignUpFormPopup({ isOpen, onClose, onFormSwitch, onSubmit, userApiError }) {
   // STATE VARIABLES //
   const [inputValues, setInputValues] = useState({
     name: '',
@@ -22,7 +22,7 @@ function SignUpFormPopup({ isOpen, onClose, onFormSwitch, onSubmit, signUpError 
     password: false
   });
 
-  const [serverError, setServerError] = useState('');
+  const [signUpError, setSignUpError] = useState('');
   const [disableSubmitButton, setDisableSubmitButton] = useState(true);
 
   // HANDLE INPUT CHANGE, HANDLE FOCUSED INPUT AND HANDLE BLURRED INPUT //
@@ -57,6 +57,7 @@ function SignUpFormPopup({ isOpen, onClose, onFormSwitch, onSubmit, signUpError 
         [name]: true
       });
     }
+    setSignUpError('');
   };
 
   const handleInputBlur = (e) => {
@@ -146,13 +147,12 @@ function SignUpFormPopup({ isOpen, onClose, onFormSwitch, onSubmit, signUpError 
       password: false
     });
 
-    setServerError('');
     setDisableSubmitButton(true);
   };
 
   useEffect(() => {
-    setServerError(signUpError);
-  }, [signUpError]);
+    setSignUpError(userApiError);
+  }, [userApiError]);
 
   useEffect(() => {
     setInputValues({
@@ -173,7 +173,6 @@ function SignUpFormPopup({ isOpen, onClose, onFormSwitch, onSubmit, signUpError 
       password: false
     });
 
-    setServerError('');
     setDisableSubmitButton(true);
   }, [onClose]);
 
@@ -236,7 +235,9 @@ function SignUpFormPopup({ isOpen, onClose, onFormSwitch, onSubmit, signUpError 
       <span className="signupform__error">
         {showValidationErrors.password && inputValues.password.length > 0 ? validationErrors.password : ''}
       </span>
-      {serverError && <span className="signupform__error">{serverError}</span>}
+      <span className="signupform__error">
+        {signUpError}
+      </span>
     </PopupForm>
   );
 }

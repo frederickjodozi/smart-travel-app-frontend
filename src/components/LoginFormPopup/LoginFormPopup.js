@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import PopupForm from '../PopupForm/PopupForm';
 import './LoginFormPopup.css';
 
-function LoginFormPopup({ isOpen, onClose, onFormSwitch, onSubmit, logInError }) {
+function LoginFormPopup({ isOpen, onClose, onFormSwitch, onSubmit, userApiError }) {
   // STATE VARIABLES //
   const [inputValues, setInputValues] = useState({
     email: '',
@@ -19,7 +19,7 @@ function LoginFormPopup({ isOpen, onClose, onFormSwitch, onSubmit, logInError })
     password: false
   });
 
-  const [serverError, setServerError] = useState('');
+  const [logInError, setLogInError] = useState('');
   const [disableSubmitButton, setDisableSubmitButton] = useState(true);
 
   // HANDLE INPUT CHANGE, HANDLE FOCUSED INPUT AND HANDLE BLURRED INPUT //
@@ -54,6 +54,7 @@ function LoginFormPopup({ isOpen, onClose, onFormSwitch, onSubmit, logInError })
         [name]: true
       });
     }
+    setLogInError('');
   };
 
   const handleInputBlur = (e) => {
@@ -130,13 +131,12 @@ function LoginFormPopup({ isOpen, onClose, onFormSwitch, onSubmit, logInError })
       password: false
     });
 
-    setServerError('');
     setDisableSubmitButton(true);
   };
 
   useEffect(() => {
-    setServerError(logInError);
-  }, [logInError]);
+    setLogInError(userApiError);
+  }, [userApiError]);
 
   useEffect(() => {
     setInputValues({
@@ -154,7 +154,6 @@ function LoginFormPopup({ isOpen, onClose, onFormSwitch, onSubmit, logInError })
       password: false
     });
 
-    setServerError('');
     setDisableSubmitButton(true);
   }, [onClose]);
 
@@ -201,7 +200,9 @@ function LoginFormPopup({ isOpen, onClose, onFormSwitch, onSubmit, logInError })
       <span className="loginform__error">
         {showValidationErrors.password && inputValues.password.length > 0 ? validationErrors.password : ''}
       </span>
-      {serverError && <span className="loginform__error">{serverError}</span>}
+      <span className="loginform__error">
+        {logInError}
+      </span>
     </PopupForm>
   );
 }

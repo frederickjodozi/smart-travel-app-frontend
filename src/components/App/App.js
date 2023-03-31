@@ -34,10 +34,11 @@ function App() {
 
   // POPUP STATES //
   const [isSignUpFormOpen, setIsSignUpFormOpen] = useState(false);
-  const [signUpError, setSignUpError] = useState('');
-
   const [isLoginFormOpen, setIsLoginFormOpen] = useState(false);
-  const [logInError, setLogInError] = useState('');
+  const [userApiErrors, setUserApiErrors] = useState({
+    register: '',
+    login: ''
+  });
 
   const [selectedLocation, setSelectedLocation] = useState(null);
 
@@ -122,6 +123,10 @@ function App() {
 
   // USER REGISTRATION AND LOGIN HANDLERS //
   const handleRegistration = (userData) => {
+    setUserApiErrors({
+      ...userApiErrors,
+      register: ''
+    })
     userApi
       .registerUser(userData)
       .then((res) => {
@@ -135,11 +140,18 @@ function App() {
       })
       .catch((err) => {
         console.log(err);
-        setSignUpError(`${err.status}: ${err.statusText}`);
+        setUserApiErrors({
+          ...userApiErrors,
+          register: `${err.status}: ${err.statusText}`
+        });
       });
   };
 
   const handleLogin = (userData) => {
+    setUserApiErrors({
+      ...userApiErrors,
+      login: ''
+    })
     userApi
       .loginUser(userData)
       .then((res) => {
@@ -152,7 +164,10 @@ function App() {
       })
       .catch((err) => {
         console.log(err);
-        setLogInError(`${err.status}: ${err.statusText}`);
+        setUserApiErrors({
+          ...userApiErrors,
+          login: `${err.status}: ${err.statusText}`
+        });
       });
   };
 
@@ -263,14 +278,14 @@ function App() {
           onClose={handleClosePopups}
           onFormSwitch={handleLoginClick}
           onSubmit={handleRegistration}
-          signUpError={signUpError}
+          userApiError={userApiErrors.register}
         />
         <LoginFormPopup
           isOpen={isLoginFormOpen}
           onClose={handleClosePopups}
           onFormSwitch={handleSignUpClick}
           onSubmit={handleLogin}
-          logInError={logInError}
+          userApiError={userApiErrors.login}
         />
         <LocationPopup location={selectedLocation} onClose={handleClosePopups} />
         <LoadingPopup isOpen={isLoading} />
