@@ -16,7 +16,8 @@ function LocationCard({ isLoggedIn, location, onCardClick, onCardSave, onCardDel
       onCardSave({
         title: location.name,
         text: location.wikipedia_extracts.text,
-        image: location.preview.source
+        image: location.preview.source,
+        country: location.address.country
       }).then((savedLocation) => {
         setCardSaved(true);
         setSavedCardId(savedLocation._id);

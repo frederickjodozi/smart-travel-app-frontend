@@ -86,7 +86,8 @@ class UserApi {
       body: JSON.stringify({
         title: locationData.title,
         text: locationData.text,
-        image: locationData.image
+        image: locationData.image,
+        country: locationData.country
       })
     }).then((res) => this._getResponseData(res));
   }
