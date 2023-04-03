@@ -56,6 +56,7 @@ function App() {
         .getUserInfo(token)
         .then((returnedUser) => {
           setIsLoggedIn(true);
+          localStorage.setItem('isLoggedIn', true);
           console.log(returnedUser);
         })
         .catch((err) => {
@@ -126,7 +127,7 @@ function App() {
     setUserApiErrors({
       ...userApiErrors,
       register: ''
-    })
+    });
     userApi
       .registerUser(userData)
       .then((res) => {
@@ -151,13 +152,14 @@ function App() {
     setUserApiErrors({
       ...userApiErrors,
       login: ''
-    })
+    });
     userApi
       .loginUser(userData)
       .then((res) => {
         if (res.token) {
           localStorage.setItem('jwt', res.token);
           setIsLoggedIn(true);
+          localStorage.setItem('isLoggedIn', true);
           handleClosePopups();
           navigate('/smart-travel-app-frontend');
         }
@@ -174,6 +176,7 @@ function App() {
   const handleLogout = () => {
     localStorage.removeItem('jwt');
     setIsLoggedIn(false);
+    localStorage.removeItem('isLoggedIn');
     navigate('/smart-travel-app-frontend');
   };
 

@@ -78,7 +78,7 @@ function Main({
         <Route
           path="/smart-travel-app-frontend/saved-locations"
           element={
-            <ProtectedRoute routeAuth={isLoggedIn} setIsLoginFormOpen={setIsLoginFormOpen}>
+            <ProtectedRoute routeAuth='isLoggedIn' setIsLoginFormOpen={setIsLoginFormOpen}>
               {savedLocations.length === 0 ? (
                 <h2 className="main__subtitle main__subtitle_nolocations">
                   No saved locations to show
