@@ -58,13 +58,13 @@ function Main({
           path="/smart-travel-app-frontend/locations"
           element={
             <>
-              <span className="main__localtiontooltip">
+              <p className="main__localtiontooltip">
                 {locationToolTip.locationName.length > 0
                   ? `Location "${locationToolTip.locationName}" has been ${locationToolTip.locationHandler}!`
                   : ''}
-              </span>
+              </p>
               <h2 className="main__subtitle">Location results for your search</h2>
-              <span className="main__message">Click cards for more info</span>
+              <p className="main__message">Click cards for more info</p>
               <Locations
                 isLoggedIn={isLoggedIn}
                 locations={locations}
@@ -85,13 +85,13 @@ function Main({
                 </h2>
               ) : (
                 <>
-                  <span className="main__locationtooltip main__locationtooltip_handler">
+                  <p className="main__locationtooltip main__locationtooltip_handler">
                     {locationToolTip.locationName.length > 0
                       ? `Location "${locationToolTip.locationName}" has been ${locationToolTip.locationHandler}!`
                       : ''}
-                  </span>
+                  </p>
                   <h2 className="main__subtitle">Your saved locations</h2>
-                  <span className="main__locationtooltip main__locationtooltip_info">{`${currentUser.name}, you have ${savedLocations.length} saved locations from ${uniqueCountries} different countries:`}</span>
+                  <p className="main__locationtooltip main__locationtooltip_info">{`${currentUser.name}, you have ${savedLocations.length} saved locations from ${uniqueCountries} different countries:`}</p>
                   <Locations
                     isLoggedIn={isLoggedIn}
                     locations={savedLocations}
