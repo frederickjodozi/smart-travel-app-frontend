@@ -58,7 +58,7 @@ function Main({
           path="/smart-travel-app-frontend/locations"
           element={
             <>
-              <p className="main__localtiontooltip">
+              <p className="main__locationtooltip main__locationtooltip_handler">
                 {locationToolTip.locationName.length > 0
                   ? `Location "${locationToolTip.locationName}" has been ${locationToolTip.locationHandler}!`
                   : ''}
