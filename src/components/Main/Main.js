@@ -1,4 +1,6 @@
+import { useContext, useState, useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
+import UserContext from '../../contexts/CurrentUserContext';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import SearchBar from '../SearchBar/SearchBar';
 import About from '../About/About';
@@ -16,6 +18,26 @@ function Main({
   locationToolTip,
   setIsLoginFormOpen
 }) {
+  const currentUser = useContext(UserContext);
+  const [uniqueCountries, setUniqueCountries] = useState(0);
+
+  const countSavedCountries = (savedLocationCards) => {
+    const savedCountries = {};
+
+    savedLocationCards.forEach((savedLocationCard) => {
+      const uniqueCountry = savedLocationCard.country;
+      if (!savedCountries[uniqueCountry]) {
+        savedCountries[uniqueCountry] = true;
+      }
+    });
+
+    setUniqueCountries(Object.keys(savedCountries).length);
+  };
+
+  useEffect(() => {
+    countSavedCountries(savedLocations);
+  }, [savedLocations]);
+
   return (
     <main className="main">
       <Routes>
@@ -63,12 +85,13 @@ function Main({
                 </h2>
               ) : (
                 <>
-                  <span>
+                  <span className="main__locationtooltip main__locationtooltip_handler">
                     {locationToolTip.locationName.length > 0
                       ? `Location "${locationToolTip.locationName}" has been ${locationToolTip.locationHandler}!`
                       : ''}
                   </span>
                   <h2 className="main__subtitle">Your saved locations</h2>
+                  <span className="main__locationtooltip main__locationtooltip_info">{`${currentUser.name}, you have ${savedLocations.length} saved locations from ${uniqueCountries} different countries:`}</span>
                   <Locations
                     isLoggedIn={isLoggedIn}
                     locations={savedLocations}

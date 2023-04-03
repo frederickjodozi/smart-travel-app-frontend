@@ -15,15 +15,22 @@
 }
 
 .main__locationtooltip {
-  margin: 0 70px;
-  padding: 0;
+  margin: 0 5%;
+  padding: 20px 0 0 0;
   color: #ffffff;
   font-family: 'Inter', sans-serif;
   font-weight: 300;
   font-size: 16px;
   line-height: 20px;
-  text-decoration: underline;
+}
+
+.main__locationtooltip_handler {
   align-self: flex-end;
+  text-decoration: underline;
+}
+
+.main__locationtooltip_info {
+  align-self: flex-start;
 }
 
 .main__subtitle {
@@ -60,7 +67,17 @@
     line-height: 45px;
   }
 
-  .main__localtiontooltip {
+  .main__locationtooltip {
+    margin: 0 4%;
+    padding: 15px 0 0 0;
+    text-align: center;
+  }
+
+  .main__locationtooltip_handler {
+    align-self: center;
+  }
+
+  .main__locationtooltip_info {
     align-self: center;
   }
 
@@ -90,7 +107,8 @@
       line-height: 40px;
     }
 
-    .main__localtiontooltip {
+    .main__locationtooltip {
+      padding: 12px 0 0 0;
       font-size: 13px;
       line-height: 18px;
     }
@@ -122,8 +140,9 @@
       line-height: 36px;
     }
 
-    .main__localtiontooltip {
-      font-style: 12px;
+    .main__locationtooltip {
+      padding: 10px 0 0 0;
+      font-size: 12px;
     }
 
     .main__subtitle {
