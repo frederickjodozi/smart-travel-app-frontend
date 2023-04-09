@@ -106,7 +106,7 @@ class UserApi {
 const userApi = new UserApi({
   baseUrl:
     process.env.NODE_ENV === 'production'
-      ? 'https://api.smarttravel.students.nomoredomainssbs.ru'
+      ? 'https://api.smarttravel.australia.ai'
       : 'http://localhost:3000'
 });
 
