@@ -7,7 +7,7 @@ function ProtectedRoute({ routeAuth, children, setIsLoginFormOpen }) {
 
   if (!authorization) {
     setIsLoginFormOpen(true);
-    return <Navigate to="/smart-travel-app-frontend/" />;
+    <Navigate to="/" />;
   }
   return children;
 }
