@@ -17,7 +17,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build",
+    "deploy": "`npm run build && scp -i ${SSH_PRIVATE_KEY_PATH} -r ./build/* fredfred776@smarttravel.australia.ai:smart-travel-app-frontend`",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "lint": "eslint ."
