@@ -42,7 +42,7 @@ function Main({
     <main className="main">
       <Routes>
         <Route
-          path="/smart-travel-app-frontend"
+          path="/"
           element={
             <>
               <h1 className="main__title">Travel Smart</h1>
@@ -55,7 +55,7 @@ function Main({
           }
         />
         <Route
-          path="/smart-travel-app-frontend/locations"
+          path="/locations"
           element={
             <>
               <p className="main__locationtooltip main__locationtooltip_handler">
@@ -76,7 +76,7 @@ function Main({
           }
         />
         <Route
-          path="/smart-travel-app-frontend/saved-locations"
+          path="/saved-locations"
           element={
             <ProtectedRoute routeAuth='isLoggedIn' setIsLoginFormOpen={setIsLoginFormOpen}>
               {savedLocations.length === 0 ? (

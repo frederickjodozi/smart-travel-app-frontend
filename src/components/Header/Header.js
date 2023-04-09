@@ -7,7 +7,7 @@ import logo from '../../images/logo.svg';
 function Header({ isLoggedIn, onLogout, onSignUpClick, onLoginClick, onSavedLocationsClick }) {
   return (
     <header className="header wrapper_type_small">
-      <Link to="/smart-travel-app-frontend">
+      <Link to="/">
         <img className="header__logo" src={logo} alt="logo" />
       </Link>
       <Navigation

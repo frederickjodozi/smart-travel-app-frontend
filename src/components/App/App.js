@@ -133,7 +133,7 @@ function App() {
       .then((res) => {
         if (res._id) {
           handleClosePopups();
-          navigate('/smart-travel-app-frontend');
+          navigate('/');
           setInfoTooltipStatus('success');
           setInfoTooltipMessage('Registration successful!');
           setIsInfoTooltipOpen(true);
@@ -161,7 +161,7 @@ function App() {
           setIsLoggedIn(true);
           localStorage.setItem('isLoggedIn', true);
           handleClosePopups();
-          navigate('/smart-travel-app-frontend');
+          navigate('/');
         }
       })
       .catch((err) => {
@@ -177,7 +177,7 @@ function App() {
     localStorage.removeItem('jwt');
     setIsLoggedIn(false);
     localStorage.removeItem('isLoggedIn');
-    navigate('/smart-travel-app-frontend');
+    navigate('/');
   };
 
   // LOCATIONS HANDLERS //
@@ -194,7 +194,7 @@ function App() {
             locationHandler: ''
           });
           setIsLoading(false);
-          navigate('/smart-travel-app-frontend/locations');
+          navigate('/locations');
         } else {
           setInfoTooltipStatus('fail');
           setInfoTooltipMessage('No location was found');
