@@ -26,6 +26,10 @@
   line-height: 20px;
 }
 
+.footer__link_no-icon {
+  margin: 0 0 0 20px;
+}
+
 .footer__link-icon {
   width: 16px;
   height: 16px;
@@ -83,6 +87,10 @@
     .footer__link {
       margin: 0 6px;
       font-size: 13px;
+    }
+
+    .footer__link_no-icon {
+      margin: 0 6px 0 20px;
     }
 
     .footer__copywrite {
