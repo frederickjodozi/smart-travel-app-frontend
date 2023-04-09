@@ -6,6 +6,6 @@ The application will consist of a main page featuring a searchbar to return info
 
 Thanks to OpenTripMap API for making this project possible: https://opentripmap.io/product
 
-[Smart Travel App](https://frederickjodozi.github.io/smart-travel-app-frontend)  
+[Smart Travel App](https://smarttravel.australia.ai)  
 
 Stay tuned for updates :)
