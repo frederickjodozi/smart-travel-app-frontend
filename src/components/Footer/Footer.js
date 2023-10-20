@@ -55,6 +55,16 @@ function Footer() {
             OpenTripMap API
           </a>
         </li>
+        <li className="footer__list-item">
+          <a
+            href="https://freedns.afraid.org/"
+            className="footer__link footer__link_no-icon"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Free DNS
+          </a>
+        </li>
       </ul>
       <p className="footer__copywrite">{`© ${date.getFullYear()} Smart Travel App`}</p>
     </footer>

@@ -57,7 +57,16 @@
 
 .location__save-button:hover {
   cursor: pointer;
-  background-color: #2f71e5;
+  background-image: url(../../images/saveRectangleFull.svg);
+}
+
+.location__save-button_saved {
+  background-image: url(../../images/saveRectangleFull.svg);
+}
+
+.location__save-button_saved:hover {
+  cursor: pointer;
+  background-image: url(../../images/saveRectangle.svg);
 }
 
 @media (max-width: 768px) {

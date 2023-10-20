@@ -20,6 +20,6 @@ This project can be cloned on a local machine for studying and/or editing, and r
 
 I would first like to thank TripleTen for teaching me the skills required to build this project, and also OpenTripMap API for their amazing and free-to-use database of sightseeing locations: https://opentripmap.io/product
 
-[Smart Travel App](https://frederickjodozi.github.io/smart-travel-app-frontend)  
+[Smart Travel App](https://smarttravel.australia.ai)  
 
 Stay tuned for updates :)

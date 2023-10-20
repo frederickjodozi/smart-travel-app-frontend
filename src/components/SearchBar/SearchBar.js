@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import './Searchbar.css';
 import smallTriangle from '../../images/smallTriangle.svg';
 import smallTriangleSelected from '../../images/smallTriangleSelected.svg';
+import errorLogo from '../../images/error-icon.svg';
 import singleDownArrow from '../../images/singleDownArrow.svg';
 import downArrow from '../../images/downArrow.png';
 
@@ -11,9 +12,11 @@ function SearchBar({ onQuery }) {
   // QUERY STATES //
   const [query, setQuery] = useState('');
   const [queryType, setQueryType] = useState('interesting_places');
-  const [errorMessage, setErrorMessage] = useState('');
 
-  // QUERY TYPE LIST DROPDOWN STATE AND EFFECT //
+  const [validationError, setValidationError] = useState('');
+  const [showValidationError, setShowValidationError] = useState(true);
+
+  // QUERY TYPE LIST STATE AND CLICK HANDLER //
   const [isQueryListOpen, setIsQueryListOpen] = useState(false);
 
   useEffect(() => {
@@ -32,7 +35,11 @@ function SearchBar({ onQuery }) {
     };
   }, [isQueryListOpen]);
 
-  // QUERY CHANGE HANDLERS //
+  const handleQueryListClick = () => {
+    setIsQueryListOpen(!isQueryListOpen);
+  };
+
+  // QUERY CHANGE, FOCUS AND BLUR HANDLERS //
   const handleQueryChange = (e) => {
     setQuery(e.target.value);
   };
@@ -42,12 +49,16 @@ function SearchBar({ onQuery }) {
     setIsQueryListOpen(false);
   };
 
-  // QUERY TYPE BUTTON CLICK HANDLER //
-  const handleQueryListClick = () => {
-    setIsQueryListOpen(!isQueryListOpen);
+  const handleInputFocus = () => {
+    setShowValidationError(false);
+    setValidationError('');
   };
 
-  // VALIDATION HANDLER //
+  const handleInputBlur = () => {
+    setShowValidationError(true);
+  };
+
+  // VALIDATION AND SUBMIT HANDLERS //
   async function handleValidation() {
     let error = '';
 
@@ -62,7 +73,6 @@ function SearchBar({ onQuery }) {
     return error;
   }
 
-  // SUBMIT HANDLER //
   const handleSubmit = (e) => {
     e.preventDefault();
     handleValidation().then((error) => {
@@ -71,7 +81,7 @@ function SearchBar({ onQuery }) {
         setQuery('');
         setQueryType('interesting_places');
       } else {
-        setErrorMessage(error);
+        setValidationError(error);
       }
     });
   };
@@ -87,6 +97,8 @@ function SearchBar({ onQuery }) {
             aria-label="query"
             value={query}
             onChange={handleQueryChange}
+            onFocus={handleInputFocus}
+            onBlur={handleInputBlur}
             placeholder="Enter a location.."
             autoComplete="off"
           />
@@ -242,16 +254,20 @@ function SearchBar({ onQuery }) {
               </li>
             </ul>
           )}
-          {errorMessage && <span className="searchbar__error">{errorMessage}</span>}
+          <div
+            className={`searchbar__error-container ${
+              validationError && showValidationError ? 'searchbar__error-container_show' : ''
+            }`}
+          >
+            <img src={errorLogo} className="searchbar__error-logo" alt="error" />
+            <span className="searchbar__error-message">{validationError}</span>
+          </div>
         </div>
         <button type="submit" className="searchbar__submit-button" aria-label="submit">
           Go!
         </button>
       </form>
-      <a
-        href="./#about"
-        className={`searchbar__link ${errorMessage && 'searchbar__link_type_error'}`}
-      >
+      <a href="#about" className="searchbar__link">
         <img className="searchbar__arrow" src={downArrow} alt="down arrow link" />
       </a>
     </section>

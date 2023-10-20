@@ -1,8 +1,18 @@
 {
   "name": "smart-travel-app-frontend",
-  "homepage": "https://frederickjodozi.github.io/smart-travel-app-frontend",
   "version": "0.1.0",
   "private": true,
+  "author": "Frederick Jodozi",
+  "description": "Frontend of the Smart Travel App: Your favorite App for travel and sightseeing location searching",
+  "homepage": "https://smarttravel.australia.ai",
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "predeploy": "npm run build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "lint": "eslint ."
+  },
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
@@ -12,27 +22,6 @@
     "react-router-dom": "^6.4.0",
     "react-scripts": "5.0.1",
     "web-vitals": "^2.1.4"
-  },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "lint": "eslint ."
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
   },
   "devDependencies": {
     "eslint": "^8.2.0",
@@ -45,5 +34,17 @@
     "eslint-plugin-react-hooks": "^4.3.0",
     "gh-pages": "^4.0.0",
     "prettier": "^2.7.1"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   }
 }

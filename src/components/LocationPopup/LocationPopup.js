@@ -11,7 +11,14 @@ function LocationPopup({ location, onClose }) {
           onClick={onClose}
           aria-label="close popup"
         />
-        <p className="locationpopup__text">{location ? location.wikipedia_extracts.text : ''}</p>
+        {/* LOCATION._ID IS USED BY SAVED LOCATIONS AND LOCATION.XID BY API RETURNED LOCATIONS */}
+        {location ? (
+          <p className="locationpopup__text">
+            {location._id ? `${location.text}` : `${location.wikipedia_extracts.text}`}
+          </p>
+        ) : (
+          ''
+        )}
       </div>
     </Popup>
   );

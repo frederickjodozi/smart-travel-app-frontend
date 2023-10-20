@@ -3,21 +3,29 @@ import './Navigation.css';
 import homeIcon from '../../images/homeIcon.svg';
 import articlesIcon from '../../images/articlesIcon.svg';
 
-function Navigation({ isLoggedIn, onLogout, onSignUpClick, onLoginClick }) {
+function Navigation({ isLoggedIn, onLogout, onSignUpClick, onLoginClick, onSavedLocationsClick }) {
+  const handleSavedLocationsClick = () => {
+    onSavedLocationsClick();
+  };
   return (
     <nav className="navigation">
       {isLoggedIn ? (
         <ul className="navigation__list">
           <li className="navigation__item">
             <img src={homeIcon} className="navigation__icon" alt="home icon" />
-            <Link to="/smart-travel-app-frontend" className="navigation__link" aria-label="home">
+            <Link to="/" className="navigation__link" aria-label="home">
               Home
             </Link>
           </li>
           <li className="navigation__item">
             <img src={articlesIcon} className="navigation__icon" alt="saved articles icon" />
-            <Link to="/smart-travel-app-frontend/saved-articles" className="navigation__link" aria-label="saved articles">
-              Saved Articles
+            <Link
+              to="/saved-locations"
+              className="navigation__link"
+              onClick={handleSavedLocationsClick}
+              aria-label="saved articles"
+            >
+              Saved Locations
             </Link>
           </li>
           <li className="navigation__item">

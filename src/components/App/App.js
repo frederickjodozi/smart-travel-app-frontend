@@ -1,8 +1,11 @@
-/* eslint-disable no-undef */
 /* eslint-disable no-console */
+/* eslint-disable no-undef */
+/* eslint-disable consistent-return */
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import UserContext from '../../contexts/CurrentUserContext';
 import * as openTripApi from '../../utils/openTripApi';
+import userApi from '../../utils/userApi';
 import Header from '../Header/Header';
 import Main from '../Main/Main';
 import SignUpFormPopup from '../SignUpFormPopup/SignUpFormPopup';
@@ -19,31 +22,80 @@ function App() {
 
   // LOGIN STATES //
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const [currentUser, setCurrentUser] = useState({});
 
   // UI RENDERED LOCATIONS STATES //
   const [locations, setLocations] = useState([]);
   const [savedLocations, setSavedLocations] = useState([]);
+  const [locationToolTip, setLocationToolTip] = useState({
+    locationName: '',
+    locationHandler: ''
+  });
 
   // POPUP STATES //
   const [isSignUpFormOpen, setIsSignUpFormOpen] = useState(false);
   const [isLoginFormOpen, setIsLoginFormOpen] = useState(false);
+  const [userApiErrors, setUserApiErrors] = useState({
+    register: '',
+    login: ''
+  });
+
   const [selectedLocation, setSelectedLocation] = useState(null);
 
   const [isInfoTooltipOpen, setIsInfoTooltipOpen] = useState(false);
   const [infoTooltipStatus, setInfoTooltipStatus] = useState('');
   const [infoTooltipMessage, setInfoTooltipMessage] = useState('');
 
-  // LOCATIONS CALL ON PAGE LOAD //
+  const [isLoading, setIsLoading] = useState(false);
+
+  // TOKEN CHECK ON APP RENDER //
   useEffect(() => {
-    const storedLocations = localStorage.getItem('locations');
-    if (storedLocations) {
-      setLocations(JSON.parse(storedLocations));
-      navigate('/smart-travel-app-frontend/locations');
+    const token = localStorage.getItem('jwt');
+    if (token) {
+      userApi
+        .getUserInfo(token)
+        .then((returnedUser) => {
+          setIsLoggedIn(true);
+          localStorage.setItem('isLoggedIn', true);
+          console.log(returnedUser);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     }
   }, []);
 
-  // OPEN POPUP HANDLERS //
+  // USER INFO CALL ON LOGIN //
+  useEffect(() => {
+    const token = localStorage.getItem('jwt');
+    if (token) {
+      userApi
+        .getUserInfo(token)
+        .then((returnedUser) => {
+          setCurrentUser(returnedUser);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  }, [isLoggedIn]);
+
+  // SAVED LOCATIONS CALL ON LOGIN //
+  useEffect(() => {
+    const token = localStorage.getItem('jwt');
+    if (token) {
+      userApi
+        .getUserLocations(token)
+        .then((returnedLocations) => {
+          setSavedLocations(returnedLocations);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  }, [isLoggedIn]);
+
+  // OPEN AND CLOSE POPUP HANDLERS //
   const handleSignUpClick = () => {
     setIsSignUpFormOpen(true);
   };
@@ -56,7 +108,6 @@ function App() {
     setSelectedLocation(location);
   };
 
-  // CLOSE POPUP HANDLER //
   const handleClosePopups = () => {
     setIsSignUpFormOpen(false);
     setIsLoginFormOpen(false);
@@ -64,19 +115,69 @@ function App() {
     setIsInfoTooltipOpen(false);
   };
 
-  // USER REGISTRATION AND LOGIN HANDLERS //
-  const handleRegistration = () => {
-    // REGISTRATION LOGIC TO BE ADDED WITH BACKEND PART OF THE PROJECT //
-    handleClosePopups();
+  const handleSavedLocationsClick = () => {
+    setLocationToolTip({
+      locationName: '',
+      locationHandler: ''
+    });
   };
 
-  const handleLogin = () => {
-    // LOGIN LOGIC TO BE ADDED WITH BACKEND PART OF THE PROJECT //
-    handleClosePopups();
+  // USER REGISTRATION AND LOGIN HANDLERS //
+  const handleRegistration = (userData) => {
+    setUserApiErrors({
+      ...userApiErrors,
+      register: ''
+    });
+    userApi
+      .registerUser(userData)
+      .then((res) => {
+        if (res._id) {
+          handleClosePopups();
+          navigate('/');
+          setInfoTooltipStatus('success');
+          setInfoTooltipMessage('Registration successful!');
+          setIsInfoTooltipOpen(true);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        setUserApiErrors({
+          ...userApiErrors,
+          register: `${err.status}: ${err.statusText}`
+        });
+      });
+  };
+
+  const handleLogin = (userData) => {
+    setUserApiErrors({
+      ...userApiErrors,
+      login: ''
+    });
+    userApi
+      .loginUser(userData)
+      .then((res) => {
+        if (res.token) {
+          localStorage.setItem('jwt', res.token);
+          setIsLoggedIn(true);
+          localStorage.setItem('isLoggedIn', true);
+          handleClosePopups();
+          navigate('/');
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        setUserApiErrors({
+          ...userApiErrors,
+          login: `${err.status}: ${err.statusText}`
+        });
+      });
   };
 
   const handleLogout = () => {
+    localStorage.removeItem('jwt');
     setIsLoggedIn(false);
+    localStorage.removeItem('isLoggedIn');
+    navigate('/');
   };
 
   // LOCATIONS HANDLERS //
@@ -88,8 +189,12 @@ function App() {
         if (locationsArray.length > 0) {
           localStorage.setItem('locations', JSON.stringify(locationsArray));
           setLocations(locationsArray);
+          setLocationToolTip({
+            locationName: '',
+            locationHandler: ''
+          });
           setIsLoading(false);
-          navigate('/smart-travel-app-frontend/locations');
+          navigate('/locations');
         } else {
           setInfoTooltipStatus('fail');
           setInfoTooltipMessage('No location was found');
@@ -112,54 +217,90 @@ function App() {
       });
   };
 
-  const handleCardSave = (location) => {
-    // LOGIN LOGIC TO BE ADDED WITH BACKEND PART OF THE PROJECT //
-    setSavedLocations([...savedLocations, location]);
-    navigate('/smart-travel-app-frontend/saved-locations');
+  const handleCardSave = (locationData) => {
+    const token = localStorage.getItem('jwt');
+    if (token) {
+      return userApi
+        .createLocation(locationData, token)
+        .then((savedLocation) => {
+          setSavedLocations([savedLocation, ...savedLocations]);
+          setLocationToolTip({
+            locationName: savedLocation.title,
+            locationHandler: 'saved'
+          });
+          return savedLocation;
+        })
+        .catch((err) => console.log(err));
+    }
   };
 
-  const handleCardDelete = (locationXid) => {
-    // LOGIN LOGIC TO BE ADDED WITH BACKEND PART OF THE PROJECT //
-    setSavedLocations((savedLocationsArray) =>
-      savedLocationsArray.filter((savedLocation) => savedLocation.xid === locationXid)
-    );
+  const handleCardDelete = (locationId) => {
+    const token = localStorage.getItem('jwt');
+    if (token) {
+      userApi
+        .deleteLocation(locationId, token)
+        .then((deletedLocation) => {
+          setSavedLocations((savedLocationsArray) =>
+            savedLocationsArray.filter((savedLocation) => savedLocation._id !== locationId)
+          );
+          setLocationToolTip({
+            locationName: deletedLocation.title,
+            locationHandler: 'deleted'
+          });
+        })
+        .catch((err) => console.log(err));
+    }
   };
 
   return (
-    <div className="app">
-      <div className="background">
-        <Header
-          isLoggedIn={isLoggedIn}
-          onLogout={handleLogout}
-          onSignUpClick={handleSignUpClick}
-          onLoginClick={handleLoginClick}
+    <UserContext.Provider value={currentUser}>
+      <div className="app">
+        <div className="background">
+          <Header
+            isLoggedIn={isLoggedIn}
+            onLogout={handleLogout}
+            onSignUpClick={handleSignUpClick}
+            onLoginClick={handleLoginClick}
+            onSavedLocationsClick={handleSavedLocationsClick}
+          />
+          <Main
+            isLoggedIn={isLoggedIn}
+            onQuery={handleQuery}
+            locations={locations}
+            savedLocations={savedLocations}
+            onCardClick={handleCardClick}
+            onCardSave={handleCardSave}
+            onCardDelete={handleCardDelete}
+            locationToolTip={locationToolTip}
+            setIsLoginFormOpen={setIsLoginFormOpen}
+          />
+        </div>
+        <Footer />
+        <SignUpFormPopup
+          isOpen={isSignUpFormOpen}
+          onClose={handleClosePopups}
+          onFormSwitch={handleLoginClick}
+          onSubmit={handleRegistration}
+          userApiError={userApiErrors.register}
         />
-        <Main
-          onQuery={handleQuery}
-          locations={locations}
-          onCardClick={handleCardClick}
-          onCardSave={handleCardSave}
-          isLoggedIn={isLoggedIn}
-          savedLocations={savedLocations}
-          onCardDelete={handleCardDelete}
+        <LoginFormPopup
+          isOpen={isLoginFormOpen}
+          onClose={handleClosePopups}
+          onFormSwitch={handleSignUpClick}
+          onSubmit={handleLogin}
+          userApiError={userApiErrors.login}
+        />
+        <LocationPopup location={selectedLocation} onClose={handleClosePopups} />
+        <LoadingPopup isOpen={isLoading} />
+        <InfoToolTip
+          isOpen={isInfoTooltipOpen}
+          onClose={handleClosePopups}
+          status={infoTooltipStatus}
+          message={infoTooltipMessage}
+          onFormSwitch={handleLoginClick}
         />
       </div>
-      <Footer />
-      <SignUpFormPopup
-        isOpen={isSignUpFormOpen}
-        onClose={handleClosePopups}
-        onSubmit={handleRegistration}
-      />
-      <LoginFormPopup isOpen={isLoginFormOpen} onClose={handleClosePopups} onSubmit={handleLogin} />
-      <LocationPopup location={selectedLocation} onClose={handleClosePopups} />
-      <LoadingPopup isOpen={isLoading} />
-      <InfoToolTip
-        isOpen={isInfoTooltipOpen}
-        onClose={handleClosePopups}
-        status={infoTooltipStatus}
-        message={infoTooltipMessage}
-      />
-    </div>
+    </UserContext.Provider>
   );
 }
 
