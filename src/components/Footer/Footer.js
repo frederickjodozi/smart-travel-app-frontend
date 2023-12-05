@@ -47,7 +47,7 @@ function Footer() {
         <li className="footer__list-item">
           <img src={openTripMapIcon} className="footer__link-icon" alt="Open Trip Map Api" />
           <a
-            href="https://opentripmap.io/product"
+            href="https://dev.opentripmap.org/product"
             className="footer__link"
             target="_blank"
             rel="noopener noreferrer"
