@@ -4,7 +4,7 @@
   "private": true,
   "author": "Frederick Jodozi",
   "description": "Frontend of the Smart Travel App: Your favorite App for travel and sightseeing location searching",
-  "homepage": "https://smarttravel.australia.ai",
+  "homepage": "https://www.smarttravel.blinklab.com",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
