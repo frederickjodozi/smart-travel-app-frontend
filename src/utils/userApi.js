@@ -106,7 +106,7 @@ class UserApi {
 const userApi = new UserApi({
   baseUrl:
     process.env.NODE_ENV === 'production'
-      ? 'https://api.smarttravel.australia.ai'
+      ? 'https://api.smarttravel.blinklab.com'
       : 'http://localhost:3000'
 });
 
