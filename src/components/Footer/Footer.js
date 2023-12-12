@@ -2,7 +2,7 @@ import './Footer.css';
 import '../../blocks/wrapper/wrapper.css';
 import linkedInIcon from '../../images/linkedInIcon.svg';
 import githubIcon from '../../images/githubIcon.svg';
-import practicumIcon from '../../images/practicumIcon.ico';
+import tripleTenIcon from '../../images/tripleTenIcon.ico';
 import openTripMapIcon from '../../images/openTripMapIcon.png';
 
 function Footer() {
@@ -34,14 +34,14 @@ function Footer() {
           </a>
         </li>
         <li className="footer__list-item">
-          <img src={practicumIcon} className="footer__link-icon" alt="Practicum" />
+          <img src={tripleTenIcon} className="footer__link-icon" alt="TripleTen" />
           <a
-            href="https://practicum.com/"
+            href="https://tripleten.com/"
             className="footer__link"
             target="_blank"
             rel="noopener noreferrer"
           >
-            Practicum
+            TripleTen
           </a>
         </li>
         <li className="footer__list-item">
