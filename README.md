@@ -18,7 +18,7 @@ The main Features on the Frontend are as follows:
 ## *Contributions*
 This project can be cloned on a local machine for studying and/or editing, and relevant pull requests will be accepted!  
 
-I would first like to thank TripleTen for teaching me the skills required to build this project, and also OpenTripMap API for their amazing and free-to-use database of sightseeing locations: https://opentripmap.io/product
+I would first like to thank TripleTen for teaching me the skills required to build this project, and also OpenTripMap API for their amazing and free-to-use database of sightseeing locations: https://dev.opentripmap.org/product
 
 ### [Smart Travel App](https://smarttravel.blinklab.com)  
 
